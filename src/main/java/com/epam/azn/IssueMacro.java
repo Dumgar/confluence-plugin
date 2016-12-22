@@ -1,20 +1,38 @@
 package com.epam.azn;
 
+import com.atlassian.applinks.api.*;
+import com.atlassian.applinks.api.application.jira.JiraApplicationType;
 import com.atlassian.confluence.content.render.xhtml.ConversionContext;
 import com.atlassian.confluence.macro.Macro;
 import com.atlassian.confluence.macro.MacroExecutionException;
+import com.atlassian.confluence.renderer.radeox.macros.MacroUtils;
+import com.atlassian.confluence.util.velocity.VelocityUtils;
 import com.atlassian.plugin.spring.scanner.annotation.component.Scanned;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 
-import com.atlassian.applinks.api.ApplicationLinkService;
+import com.atlassian.sal.api.net.Request;
+import com.atlassian.sal.api.net.ResponseException;
+import com.google.gson.Gson;
+import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Scanned
-public class IssueMacro implements Macro{
+public class IssueMacro implements Macro {
 
     private final ApplicationLinkService applicationLinkService;
+
+    private static final String JIRA_AUTH_MSG_START = "In order to proceed <a href=\"";
+    private static final String JIRA_AUTH_MSG_END = "\">click here to authorize in JIRA.</a>";
+
+    private final static String ISSUES_BY_JQL_REST_API_URL = "/rest/api/2/search?jql=";
+
+    private static final String JQL_KEY = "jqlString";
+    private static final String APPLICATION_LINK_MSG = "In order to proceed configure Application Link to JIRA or contact your administrator to do it.";
 
     @Autowired
     public IssueMacro(@ComponentImport final ApplicationLinkService applicationLinkService) {
@@ -22,7 +40,41 @@ public class IssueMacro implements Macro{
     }
 
     public String execute(Map<String, String> map, String s, ConversionContext conversionContext) throws MacroExecutionException {
-        return null;
+
+        String jql = map.get(JQL_KEY);
+        if (jql == null || jql.length() < 1) {
+            return "";
+        }
+        ApplicationLink applicationLink = applicationLinkService.getPrimaryApplicationLink(JiraApplicationType.class);
+        if (applicationLink == null) {
+            return APPLICATION_LINK_MSG;
+        }
+        ApplicationLinkRequestFactory requestFactory = applicationLink.createAuthenticatedRequestFactory();
+
+        String jiraRestQuery = null;
+        try {
+            jiraRestQuery = applicationLink.getRpcUrl()
+                    + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name());
+            ApplicationLinkRequest request = null;
+
+            request = requestFactory.createRequest(Request.MethodType.GET, jiraRestQuery);
+            String jiraResponseContent = null;
+
+            jiraResponseContent = request.execute();
+
+            Gson gson = new Gson();
+            JqlResult jqlResult = gson.fromJson(jiraResponseContent, JqlResult.class);
+            for (String s1 : jqlResult.getIssues()) {
+                System.out.println(s1);
+            }
+            return "";
+        } catch (UnsupportedEncodingException | ResponseException e) {
+            e.printStackTrace();
+        } catch (CredentialsRequiredException e) {
+            e.printStackTrace();
+            return JIRA_AUTH_MSG_START + e.getAuthorisationURI() + JIRA_AUTH_MSG_END;
+        }
+        return "";
     }
 
     public BodyType getBodyType() {
