@@ -24,6 +24,7 @@
     <xhtml-macro name="issue-macro" class="com.epam.azn.IssueMacro" key="issue-macro">
         <parameters>
             <parameter name="jqlString" type="string" required="true" />
+            <parameter name="pageID" type="string" required="true" />
         </parameters>
     </xhtml-macro>
     

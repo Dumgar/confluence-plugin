@@ -10,7 +10,7 @@ import java.util.List;
 public class JqlResult {
 
     private long total;
-    private List<String> issues;
+    private List<JiraIssue> issues;
 
     public long getTotal() {
         return total;
@@ -20,11 +20,11 @@ public class JqlResult {
         this.total = total;
     }
 
-    public List<String> getIssues() {
+    public List<JiraIssue> getIssues() {
         return issues;
     }
 
-    public void setIssues(List<String> issues) {
+    public void setIssues(List<JiraIssue> issues) {
         this.issues = issues;
     }
 }
