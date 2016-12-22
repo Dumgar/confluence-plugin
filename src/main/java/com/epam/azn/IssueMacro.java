@@ -36,6 +36,7 @@ public class IssueMacro implements Macro {
     private final static String ISSUES_BY_JQL_REST_API_URL = "/rest/api/2/search?jql=";
 
     private static final String JQL_KEY = "jqlString";
+    private static final String PAGE_ID = "pageID";
     private static final String APPLICATION_LINK_MSG = "In order to proceed configure Application Link to JIRA or contact your administrator to do it.";
 
     @Autowired
@@ -48,9 +49,19 @@ public class IssueMacro implements Macro {
 
         List<String> listOfKeys = new ArrayList<>();
 
-        long pageID = Long.parseLong(map.get("pageID"));
+        long pageID;
+        String templateString;
+        try {
+            pageID = Long.parseLong(map.get(PAGE_ID));
+            templateString = pageManager.getPage(pageID).getBodyAsString();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return "ID must be a number";
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return "Page with this ID does not exist";
+        }
 
-        String templateString = pageManager.getPage(pageID).getBodyAsString();
 
         String jql = map.get(JQL_KEY);
         if (jql == null || jql.length() < 1) {
