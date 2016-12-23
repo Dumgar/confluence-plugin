@@ -36,6 +36,8 @@ public class IssueMacro implements Macro {
 
     private static final String JIRA_AUTH_MSG_START = "In order to proceed <a href=\"";
     private static final String JIRA_AUTH_MSG_END = "\">click here to authorize in JIRA.</a>";
+    private static final String INCORRECT_JQL = "Incorrect JQL statement";
+    private static final String WRONG_CHARACTER_ENCODING = "The Character Encoding is not supported.";
 
     private final static String ISSUES_BY_JQL_REST_API_URL = "/rest/api/2/search?jql=";
 
@@ -336,13 +338,16 @@ public class IssueMacro implements Macro {
                 }
             }*/
             return selectFormBuilder.toString();
-        } catch (UnsupportedEncodingException | ResponseException e) {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            return WRONG_CHARACTER_ENCODING;
+        } catch (ResponseException e) {
+            e.printStackTrace();
+            return INCORRECT_JQL;
         } catch (CredentialsRequiredException e) {
             e.printStackTrace();
             return JIRA_AUTH_MSG_START + e.getAuthorisationURI() + JIRA_AUTH_MSG_END;
         }
-        return templateString;
     }
 
     public BodyType getBodyType() {
