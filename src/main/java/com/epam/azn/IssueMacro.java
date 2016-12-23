@@ -73,7 +73,7 @@ public class IssueMacro implements Macro {
                 "                <H1 id=\"TestReportingPage-Project:%project%\">Project:&nbsp;%project%</H1>\n" +
                 "                <P>Key:&nbsp;%Key%&nbsp;</P>\n" +
                 "                <P>Reporter:&nbsp;%reporter%</P>\n" +
-                "                <P>End date: %field3%&nbsp;</P>\n" +
+                "                <P>Summary: %summary%&nbsp;</P>\n" +
                 "                <P>&nbsp;</P></DIV>\n" +
                 "        </DIV>\n" +
                 "    </DIV>\n" +
@@ -90,27 +90,27 @@ public class IssueMacro implements Macro {
                 "                        </TR>\n" +
                 "                        <TR>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P>Capability</P></TD>\n" +
+                "                                <P>Checkbox</P></TD>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P>%field9%&nbsp;</P></TD>\n" +
+                "                                <P>%customfield_10000%&nbsp;</P></TD>\n" +
                 "                        </TR>\n" +
                 "                        <TR>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P>CFIT</P></TD>\n" +
+                "                                <P>Resolution</P></TD>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P style=\"text-align: left;\">%field10%</P></TD>\n" +
+                "                                <P style=\"text-align: left;\">%resolution%</P></TD>\n" +
                 "                        </TR>\n" +
                 "                        <TR>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P>CFIT Contact</P></TD>\n" +
+                "                                <P>Last Viewed</P></TD>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P>%field11%</P></TD>\n" +
+                "                                <P>%lastViewed%</P></TD>\n" +
                 "                        </TR>\n" +
                 "                        <TR>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P>ALS Lead</P></TD>\n" +
+                "                                <P>Watches</P></TD>\n" +
                 "                            <TD class=\"confluenceTd\">\n" +
-                "                                <P>%field12%</P></TD>\n" +
+                "                                <P>%watches%</P></TD>\n" +
                 "                        </TR>\n" +
                 "                        </TBODY>\n" +
                 "                    </TABLE>\n" +
@@ -295,6 +295,7 @@ public class IssueMacro implements Macro {
                         .append(key)
                         .append("\" style=\"display: none\">");
                 String replacement = template;
+                replacement = replacement.replaceAll("%Key%", issue.getKey());
                 for (Map.Entry<String, Object> entry : issueFields.entrySet()) {
                     String fieldKey = entry.getKey();
                     Object fieldValue = entry.getValue();
@@ -383,6 +384,9 @@ public class IssueMacro implements Macro {
             for (String value : toBeSorted) {
                 sb.append(value).append(", ");
             }
+            if (sb.length() > 2) {
+                sb.setLength(sb.length() - 2);
+            }
             /*if (sb.length() > TD_START_TAG.length()) {
                 sb.setLength(sb.length() - 2);
             }
@@ -410,9 +414,9 @@ public class IssueMacro implements Macro {
 
         StringBuilder sb = new StringBuilder();
         for (Object key : stringMap.keySet()) {
-            if (!SELF_KEY.equalsIgnoreCase(key.toString())) {
+//            if (!SELF_KEY.equalsIgnoreCase(key.toString())) {
                 sb.append(key).append(FIELD_VALUES_ASSIGNMENT).append(stringMap.get(key)).append(FIELD_VALUES_SEPARATOR);
-            }
+//            }
         }
         if (sb.length() > 2) {
             sb.setLength(sb.length() - 2);
