@@ -14,19 +14,23 @@ import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.sal.api.net.Request;
 import com.atlassian.sal.api.net.ResponseException;
 import com.google.gson.Gson;
+import com.google.gson.internal.StringMap;
 import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Scanned
 public class IssueMacro implements Macro {
 
+    private static final String[] ORDERED_MEANINGFUL_FIELD_KEYS = new String[]{"displayName", "name", "value", "votes", "watchCount"};
+
+    private static final String SELF_KEY = "self";
+    private static final String FIELD_VALUES_ASSIGNMENT = ": ";
+    private static final String FIELD_VALUES_SEPARATOR = ", ";
     private final ApplicationLinkService applicationLinkService;
     private final PageManager pageManager;
 
@@ -40,7 +44,7 @@ public class IssueMacro implements Macro {
     private static final String APPLICATION_LINK_MSG = "In order to proceed configure Application Link to JIRA or contact your administrator to do it.";
 
     @Autowired
-    public IssueMacro(@ComponentImport final ApplicationLinkService applicationLinkService,@ComponentImport final PageManager pageManager) {
+    public IssueMacro(@ComponentImport final ApplicationLinkService applicationLinkService, @ComponentImport final PageManager pageManager) {
         this.applicationLinkService = applicationLinkService;
         this.pageManager = pageManager;
     }
@@ -61,6 +65,192 @@ public class IssueMacro implements Macro {
             e.printStackTrace();
             return "Page with this ID does not exist";
         }
+
+        String template = "<DIV class=\"contentLayout2\">\n" +
+                "    <DIV class=\"columnLayout single\" data-layout=\"single\">\n" +
+                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
+                "            <DIV class=\"innerCell\">\n" +
+                "                <H1 id=\"TestReportingPage-Project:%project%\">Project:&nbsp;%project%</H1>\n" +
+                "                <P>Key:&nbsp;%Key%&nbsp;</P>\n" +
+                "                <P>Reporter:&nbsp;reporter</P>\n" +
+                "                <P>End date: %field3%&nbsp;</P>\n" +
+                "                <P>&nbsp;</P></DIV>\n" +
+                "        </DIV>\n" +
+                "    </DIV>\n" +
+                "    <DIV class=\"columnLayout two-equal\" data-layout=\"two-equal\">\n" +
+                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
+                "            <DIV class=\"innerCell\">\n" +
+                "                <DIV class=\"table-wrap\">\n" +
+                "                    <TABLE class=\"confluenceTable\">\n" +
+                "                        <TBODY>\n" +
+                "                        <TR>\n" +
+                "                            <TH class=\"confluenceTh\" colspan=\"2\">\n" +
+                "                                <H2 id=\"TestReportingPage-KEYSTAKEHOLDERS\"><STRONG>KEY\n" +
+                "                                    STAKEHOLDERS</STRONG></H2></TH>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>Capability</P></TD>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>%field9%&nbsp;</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>CFIT</P></TD>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P style=\"text-align: left;\">%field10%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>CFIT Contact</P></TD>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>%field11%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>ALS Lead</P></TD>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>%field12%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        </TBODY>\n" +
+                "                    </TABLE>\n" +
+                "                </DIV>\n" +
+                "                <P>&nbsp;</P>\n" +
+                "                <P>&nbsp;</P></DIV>\n" +
+                "        </DIV>\n" +
+                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
+                "            <DIV class=\"innerCell\">\n" +
+                "                <DIV class=\"table-wrap\">\n" +
+                "                    <TABLE class=\"confluenceTable\">\n" +
+                "                        <TBODY>\n" +
+                "                        <TR>\n" +
+                "                            <TH class=\"confluenceTh\">\n" +
+                "                                <H2 id=\"TestReportingPage-ASSESSMENT\"><STRONG>ASSESSMENT</STRONG></H2></TH>\n" +
+                "                            <TH class=\"confluenceTh\">\n" +
+                "                                <H2 id=\"TestReportingPage-PREVIOUS\"><STRONG>PREVIOUS</STRONG></H2></TH>\n" +
+                "                            <TH class=\"confluenceTh\">\n" +
+                "                                <H2 id=\"TestReportingPage-CURRENT\"><STRONG>CURRENT</STRONG></H2></TH>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>Overall schedule</P></TD>\n" +
+                "                            <TD class=\"highlight-red confluenceTd\" data-highlight-colour=\"red\">\n" +
+                "                                <P>%colorFiled1prev%</P></TD>\n" +
+                "                            <TD class=\"highlight-green confluenceTd\" data-highlight-colour=\"green\">\n" +
+                "                                <P>%colorFiled1%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>Budget</P></TD>\n" +
+                "                            <TD class=\"highlight-yellow confluenceTd\" data-highlight-colour=\"yellow\">\n" +
+                "                                <P>%colorFiled2prev%</P></TD>\n" +
+                "                            <TD class=\"highlight-yellow confluenceTd\" data-highlight-colour=\"yellow\">\n" +
+                "                                <P>%colorFiled2%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>Resources</P></TD>\n" +
+                "                            <TD class=\"highlight-green confluenceTd\" data-highlight-colour=\"green\">\n" +
+                "                                <P>%colorFiled3prev%</P></TD>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>%colorFiled3%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>Scope</P></TD>\n" +
+                "                            <TD class=\"highlight-red confluenceTd\" data-highlight-colour=\"red\">\n" +
+                "                                <P>%colorFiled4prev%</P></TD>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>%colorFiled4%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        </TBODY>\n" +
+                "                    </TABLE>\n" +
+                "                </DIV>\n" +
+                "                <P>&nbsp;</P>\n" +
+                "                <P>&nbsp;</P></DIV>\n" +
+                "        </DIV>\n" +
+                "    </DIV>\n" +
+                "    <DIV class=\"columnLayout two-equal\" data-layout=\"two-equal\">\n" +
+                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
+                "            <DIV class=\"innerCell\">\n" +
+                "                <DIV class=\"table-wrap\">\n" +
+                "                    <TABLE class=\"confluenceTable\">\n" +
+                "                        <TBODY>\n" +
+                "                        <TR>\n" +
+                "                            <TH class=\"confluenceTh\">\n" +
+                "                                <H2 id=\"TestReportingPage-ACTIVITIES\"><STRONG>ACTIVITIES</STRONG></H2>\n" +
+                "                                <P>&nbsp;</P></TH>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\" colspan=\"1\">\n" +
+                "                                <P>Accomplishments since last update:</P>\n" +
+                "                                <P>%field5%</P>&nbsp;</TD>\n" +
+                "                        </TR>\n" +
+                "                        </TBODY>\n" +
+                "                    </TABLE>\n" +
+                "                </DIV>\n" +
+                "            </DIV>\n" +
+                "        </DIV>\n" +
+                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
+                "            <DIV class=\"innerCell\">\n" +
+                "                <DIV class=\"table-wrap\">\n" +
+                "                    <TABLE class=\"confluenceTable\">\n" +
+                "                        <TBODY>\n" +
+                "                        <TR>\n" +
+                "                            <TH class=\"confluenceTh\">\n" +
+                "                                <H2 id=\"TestReportingPage-ISSUE/RISKMANAGEMENT\"><STRONG>&nbsp;ISSUE / RISK\n" +
+                "                                    MANAGEMENT</STRONG></H2></TH>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>%field6%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        </TBODY>\n" +
+                "                    </TABLE>\n" +
+                "                </DIV>\n" +
+                "            </DIV>\n" +
+                "        </DIV>\n" +
+                "    </DIV>\n" +
+                "    <DIV class=\"columnLayout two-equal\" data-layout=\"two-equal\">\n" +
+                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
+                "            <DIV class=\"innerCell\">\n" +
+                "                <DIV class=\"table-wrap\">\n" +
+                "                    <TABLE class=\"confluenceTable\">\n" +
+                "                        <TBODY>\n" +
+                "                        <TR>\n" +
+                "                            <TH class=\"confluenceTh\">\n" +
+                "                                <P>&nbsp;DECISIONS / CLARIFICATIONS</P></TH>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>Decisions since last update:&nbsp;&nbsp;<BR>\n" +
+                "                                    %field7%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        </TBODY>\n" +
+                "                    </TABLE>\n" +
+                "                </DIV>\n" +
+                "            </DIV>\n" +
+                "        </DIV>\n" +
+                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
+                "            <DIV class=\"innerCell\">\n" +
+                "                <DIV class=\"table-wrap\">\n" +
+                "                    <TABLE class=\"confluenceTable\">\n" +
+                "                        <TBODY>\n" +
+                "                        <TR>\n" +
+                "                            <TH class=\"confluenceTh\">\n" +
+                "                                <P>UPCOMING MILESTONES</P></TH>\n" +
+                "                        </TR>\n" +
+                "                        <TR>\n" +
+                "                            <TD class=\"confluenceTd\">\n" +
+                "                                <P>%field8%</P></TD>\n" +
+                "                        </TR>\n" +
+                "                        </TBODY>\n" +
+                "                    </TABLE>\n" +
+                "                </DIV>\n" +
+                "            </DIV>\n" +
+                "        </DIV>\n" +
+                "    </DIV>\n" +
+                "</DIV>";
 
 
         String jql = map.get(JQL_KEY);
@@ -86,11 +276,65 @@ public class IssueMacro implements Macro {
 
             Gson gson = new Gson();
             JqlResult jqlResult = gson.fromJson(jiraResponseContent, JqlResult.class);
-            for (JiraIssue s1 : jqlResult.getIssues()) {
-                listOfKeys.add(s1.getKey());
-                System.out.println(s1);
+            StringBuilder selectFormBuilder = new StringBuilder();
+            StringBuilder divIssueBuilder = new StringBuilder();
+            selectFormBuilder.append("<p><select id=\"hero\" onchange=\"show(oldValue); oldValue = this.value\">\n" +
+                    "    <option disabled>Choose Issue</option>\n" +
+                    "    <option value=\"\"></option>\n");
+
+            for (JiraIssue issue : jqlResult.getIssues()) {
+                String key = issue.getKey();
+                HashMap<String, Object> issueFields = issue.getFields();
+
+                selectFormBuilder.append("<option value=\"")
+                        .append(key)
+                        .append("\">")
+                        .append(key)
+                        .append("</option>\n");
+                divIssueBuilder.append("<div id=\"")
+                        .append(key)
+                        .append("\" style=\"display: none\">");
+                String replacement = template;
+                for (Map.Entry<String, Object> entry : issueFields.entrySet()) {
+                    String fieldKey = entry.getKey();
+                    Object fieldValue = entry.getValue();
+                    System.out.println("Key - " + "%" + fieldKey + "%");
+                    replacement = replacement.replaceAll(fieldKey, getValueFromJson(fieldValue));
+                }
+                System.out.println("///////////////////////////////");
+                divIssueBuilder.append(replacement)
+//                        .append(issueFields)
+                        .append("</div>\n");
             }
-            return "";
+
+            selectFormBuilder.append("</select></p>\n<br/><div id=\"\" style=\"display: none\"></div>\n")
+                    .append(divIssueBuilder)
+//                    .append(template)
+                    .append("<script>\n" +
+                            "    var oldValue;\n" +
+                            "    function show(previous) {\n" +
+                            "        if (previous) {\n" +
+                            "            document.getElementById(previous).style.display = 'none';\n" +
+                            "        }\n" +
+                            "        var x = document.getElementById(\"hero\").value;\n" +
+                            "        document.getElementById(x).style.display = 'block';\n" +
+                            "    }\n" +
+                            "</script>");
+
+
+
+
+            /*for (JiraIssue s1 : jqlResult.getIssues()) {
+                System.out.println("////////////////////////////////////////////////" + s1.getKey());
+                HashMap<String, Object> fields = s1.getFields();
+                for (Map.Entry<String, Object> entry : fields.entrySet()) {
+                    System.out.println("Key - " + entry.getKey());
+                    System.out.println("////////////////////");
+                    System.out.println("Value - " + entry.getValue());
+                    System.out.println("////////////////////");
+                }
+            }*/
+            return selectFormBuilder.toString();
         } catch (UnsupportedEncodingException | ResponseException e) {
             e.printStackTrace();
         } catch (CredentialsRequiredException e) {
@@ -106,5 +350,64 @@ public class IssueMacro implements Macro {
 
     public OutputType getOutputType() {
         return OutputType.BLOCK;
+    }
+
+    private String getValueFromJson(Object data) {
+        if (data == null) {
+            return "Empty";
+        }
+        if (data instanceof String) {
+            return (String) data;
+        }
+        if (data instanceof ArrayList) {
+            ArrayList arrayList = (ArrayList) data;
+            if (arrayList.isEmpty()) {
+                return "Empty List";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<String> toBeSorted = new LinkedList<>();
+            for (Object o : arrayList) {
+                if (o instanceof StringMap) {
+                    StringMap stringMap = (StringMap) o;
+                    if (!stringMap.isEmpty()) {
+                        toBeSorted.add(getMeaningfulData(stringMap));
+                    }
+                } else if (o != null && o.toString().length() > 0) {
+                    toBeSorted.add(o.toString());
+                }
+            }
+            java.util.Collections.sort(toBeSorted);
+            for (String value : toBeSorted) {
+                sb.append(value).append(", ");
+            }
+            /*if (sb.length() > TD_START_TAG.length()) {
+                sb.setLength(sb.length() - 2);
+            }
+            sb.append(TD_END_TAG);*/
+            return sb.toString();
+        }
+        return data.toString();
+    }
+
+    private String getMeaningfulData(StringMap stringMap) {
+        for (String key : ORDERED_MEANINGFUL_FIELD_KEYS) {
+            Object value = stringMap.get(key);
+            if (value != null) {
+                return value.toString();
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Object key : stringMap.keySet()) {
+            if (!SELF_KEY.equalsIgnoreCase(key.toString())) {
+                sb.append(key).append(FIELD_VALUES_ASSIGNMENT).append(stringMap.get(key)).append(FIELD_VALUES_SEPARATOR);
+            }
+        }
+        if (sb.length() > 2) {
+            sb.setLength(sb.length() - 2);
+        }
+
+        return sb.toString();
     }
 }
