@@ -3,16 +3,21 @@ package com.epam.azn;
 import com.atlassian.applinks.api.*;
 import com.atlassian.applinks.api.application.jira.JiraApplicationType;
 import com.atlassian.confluence.content.render.xhtml.ConversionContext;
+import com.atlassian.confluence.content.render.xhtml.DefaultConversionContext;
+import com.atlassian.confluence.content.render.xhtml.DeviceTypeAwareRenderer;
 import com.atlassian.confluence.macro.Macro;
 import com.atlassian.confluence.macro.MacroExecutionException;
+import com.atlassian.confluence.pages.Page;
 import com.atlassian.confluence.pages.PageManager;
 import com.atlassian.confluence.renderer.radeox.macros.MacroUtils;
 import com.atlassian.confluence.util.velocity.VelocityUtils;
+import com.atlassian.core.util.HTMLUtils;
 import com.atlassian.plugin.spring.scanner.annotation.component.Scanned;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 
 import com.atlassian.sal.api.net.Request;
 import com.atlassian.sal.api.net.ResponseException;
+import com.atlassian.spring.container.ContainerManager;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
 import org.apache.velocity.VelocityContext;
@@ -53,13 +58,14 @@ public class IssueMacro implements Macro {
 
     public String execute(Map<String, String> map, String s, ConversionContext conversionContext) throws MacroExecutionException {
 
+
         List<String> listOfKeys = new ArrayList<>();
 
         long pageID;
-        String templateString;
+        Page templateString;
         try {
             pageID = Long.parseLong(map.get(PAGE_ID));
-            templateString = pageManager.getPage(pageID).getBodyAsString();
+            templateString = pageManager.getPage(pageID);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return "ID must be a number";
@@ -67,6 +73,10 @@ public class IssueMacro implements Macro {
             e.printStackTrace();
             return "Page with this ID does not exist";
         }
+        DeviceTypeAwareRenderer renderer = (DeviceTypeAwareRenderer) ContainerManager.getComponent("viewRenderer");
+        conversionContext = new DefaultConversionContext(templateString.toPageContext());
+        String rendered = renderer.render(templateString.getEntity(), conversionContext);
+        String result = HTMLUtils.stripTags(rendered);
 
         String template = "<DIV class=\"contentLayout2\">\n" +
                 "    <DIV class=\"columnLayout single\" data-layout=\"single\">\n" +
