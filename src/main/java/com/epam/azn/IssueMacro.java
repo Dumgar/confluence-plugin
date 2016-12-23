@@ -5,6 +5,7 @@ import com.atlassian.applinks.api.application.jira.JiraApplicationType;
 import com.atlassian.confluence.content.render.xhtml.ConversionContext;
 import com.atlassian.confluence.content.render.xhtml.DefaultConversionContext;
 import com.atlassian.confluence.content.render.xhtml.DeviceTypeAwareRenderer;
+import com.atlassian.confluence.core.BodyType;
 import com.atlassian.confluence.macro.Macro;
 import com.atlassian.confluence.macro.MacroExecutionException;
 import com.atlassian.confluence.pages.Page;
@@ -62,10 +63,10 @@ public class IssueMacro implements Macro {
         List<String> listOfKeys = new ArrayList<>();
 
         long pageID;
-        Page templateString;
+        String templateString;
         try {
             pageID = Long.parseLong(map.get(PAGE_ID));
-            templateString = pageManager.getPage(pageID);
+            templateString = pageManager.getPage(pageID).getBodyContent(com.atlassian.confluence.core.BodyType.RAW).getBody();
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return "ID must be a number";
@@ -73,12 +74,14 @@ public class IssueMacro implements Macro {
             e.printStackTrace();
             return "Page with this ID does not exist";
         }
-        DeviceTypeAwareRenderer renderer = (DeviceTypeAwareRenderer) ContainerManager.getComponent("viewRenderer");
+        /*DeviceTypeAwareRenderer renderer = (DeviceTypeAwareRenderer) ContainerManager.getComponent("viewRenderer");
         conversionContext = new DefaultConversionContext(templateString.toPageContext());
         String rendered = renderer.render(templateString.getEntity(), conversionContext);
-        String result = HTMLUtils.stripTags(rendered);
+        String result = HTMLUtils.stripTags(rendered);*/
 
-        String template = "<DIV class=\"contentLayout2\">\n" +
+        System.out.println(templateString);
+
+        /*String template = "<DIV class=\"contentLayout2\">\n" +
                 "    <DIV class=\"columnLayout single\" data-layout=\"single\">\n" +
                 "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
                 "            <DIV class=\"innerCell\">\n" +
@@ -337,7 +340,7 @@ public class IssueMacro implements Macro {
 
 
 
-            /*for (JiraIssue s1 : jqlResult.getIssues()) {
+            *//*for (JiraIssue s1 : jqlResult.getIssues()) {
                 System.out.println("////////////////////////////////////////////////" + s1.getKey());
                 HashMap<String, Object> fields = s1.getFields();
                 for (Map.Entry<String, Object> entry : fields.entrySet()) {
@@ -346,7 +349,7 @@ public class IssueMacro implements Macro {
                     System.out.println("Value - " + entry.getValue());
                     System.out.println("////////////////////");
                 }
-            }*/
+            }*//*
             return selectFormBuilder.toString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -357,7 +360,8 @@ public class IssueMacro implements Macro {
         } catch (CredentialsRequiredException e) {
             e.printStackTrace();
             return JIRA_AUTH_MSG_START + e.getAuthorisationURI() + JIRA_AUTH_MSG_END;
-        }
+        }*/
+        return templateString;
     }
 
     public BodyType getBodyType() {
