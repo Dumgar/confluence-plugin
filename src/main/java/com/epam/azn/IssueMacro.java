@@ -72,7 +72,7 @@ public class IssueMacro implements Macro {
                 "            <DIV class=\"innerCell\">\n" +
                 "                <H1 id=\"TestReportingPage-Project:%project%\">Project:&nbsp;%project%</H1>\n" +
                 "                <P>Key:&nbsp;%Key%&nbsp;</P>\n" +
-                "                <P>Reporter:&nbsp;reporter</P>\n" +
+                "                <P>Reporter:&nbsp;%reporter%</P>\n" +
                 "                <P>End date: %field3%&nbsp;</P>\n" +
                 "                <P>&nbsp;</P></DIV>\n" +
                 "        </DIV>\n" +
@@ -299,7 +299,7 @@ public class IssueMacro implements Macro {
                     String fieldKey = entry.getKey();
                     Object fieldValue = entry.getValue();
                     System.out.println("Key - " + "%" + fieldKey + "%");
-                    replacement = replacement.replaceAll(fieldKey, getValueFromJson(fieldValue));
+                    replacement = replacement.replaceAll("%" + fieldKey + "%", getValueFromJson(fieldValue));
                 }
                 System.out.println("///////////////////////////////");
                 divIssueBuilder.append(replacement)
@@ -356,9 +356,11 @@ public class IssueMacro implements Macro {
         if (data == null) {
             return "Empty";
         }
+
         if (data instanceof String) {
             return (String) data;
         }
+
         if (data instanceof ArrayList) {
             ArrayList arrayList = (ArrayList) data;
             if (arrayList.isEmpty()) {
@@ -386,6 +388,14 @@ public class IssueMacro implements Macro {
             }
             sb.append(TD_END_TAG);*/
             return sb.toString();
+        }
+
+        if (data instanceof StringMap) {
+            StringMap stringMap = (StringMap) data;
+            if (stringMap.isEmpty()) {
+                return "Empty Map";
+            }
+            return getMeaningfulData(stringMap);
         }
         return data.toString();
     }
