@@ -66,7 +66,7 @@ public class IssueMacro implements Macro {
         String templateString;
         try {
             pageID = Long.parseLong(map.get(PAGE_ID));
-            templateString = pageManager.getPage(pageID).getBodyContent(com.atlassian.confluence.core.BodyType.RAW).getBody();
+            templateString = pageManager.getPage(pageID).getBodyAsString();
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return "ID must be a number";
