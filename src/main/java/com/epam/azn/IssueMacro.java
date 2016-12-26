@@ -34,6 +34,7 @@ public class IssueMacro implements Macro {
     private static final String JIRA_AUTH_MSG_END = "\">click here to authorize in JIRA.</a>";
     private static final String INCORRECT_JQL = "Incorrect JQL statement";
     private static final String WRONG_CHARACTER_ENCODING = "The Character Encoding is not supported.";
+    private static final String WRONG_PAGE_ID = "PageID is incorrect or there no template.";
 
     private final static String ISSUES_BY_JQL_REST_API_URL = "/rest/api/2/search?jql=";
 
@@ -62,7 +63,6 @@ public class IssueMacro implements Macro {
             return "Page with this ID does not exist";
         }
 
-        template = template.substring(template.indexOf("CDATA[") + 6, template.indexOf("]]"));
 
 //        System.out.println(template);
 
@@ -265,6 +265,9 @@ public class IssueMacro implements Macro {
 
         String jiraRestQuery = null;
         try {
+
+            template = template.substring(template.indexOf("CDATA[") + 6, template.indexOf("]]"));
+
             jiraRestQuery = applicationLink.getRpcUrl()
                     + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name());
             ApplicationLinkRequest request = null;
@@ -318,6 +321,9 @@ public class IssueMacro implements Macro {
                             "    }\n" +
                             "</script>");
             return selectFormBuilder.toString();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return WRONG_PAGE_ID;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return WRONG_CHARACTER_ENCODING;
