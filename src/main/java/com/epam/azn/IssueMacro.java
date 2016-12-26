@@ -50,11 +50,10 @@ public class IssueMacro implements Macro {
 
     public String execute(Map<String, String> map, String s, ConversionContext conversionContext) throws MacroExecutionException {
 
-        long pageID;
         String template;
+
         try {
-            pageID = Long.parseLong(map.get(PAGE_ID));
-            template = pageManager.getPage(pageID).getBodyAsString();
+            template = getTemplate(map);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return "ID must be a number";
@@ -62,9 +61,6 @@ public class IssueMacro implements Macro {
             e.printStackTrace();
             return "Page with this ID does not exist";
         }
-
-
-//        System.out.println(template);
 
 //        String template = "<DIV class=\"contentLayout2\">\n" +
 //                "    <DIV class=\"columnLayout single\" data-layout=\"single\">\n" +
@@ -257,74 +253,19 @@ public class IssueMacro implements Macro {
         if (jql == null || jql.length() < 1) {
             return "";
         }
+
         ApplicationLink applicationLink = applicationLinkService.getPrimaryApplicationLink(JiraApplicationType.class);
+
         if (applicationLink == null) {
             return APPLICATION_LINK_MSG;
         }
-        ApplicationLinkRequestFactory requestFactory = applicationLink.createAuthenticatedRequestFactory();
 
-        String jiraRestQuery = null;
         try {
 
-            template = template.substring(template.indexOf("CDATA[") + 6, template.indexOf("]]"));
+            JqlResult jqlResult = getJqlResult(applicationLink, jql);
 
-            jiraRestQuery = applicationLink.getRpcUrl()
-                    + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name());
-            ApplicationLinkRequest request = null;
+            return getCompleteString(jqlResult, template);
 
-            request = requestFactory.createRequest(Request.MethodType.GET, jiraRestQuery);
-            String jiraResponseContent = null;
-
-            jiraResponseContent = request.execute();
-
-            Gson gson = new Gson();
-            JqlResult jqlResult = gson.fromJson(jiraResponseContent, JqlResult.class);
-            StringBuilder selectFormBuilder = new StringBuilder();
-            StringBuilder divIssueBuilder = new StringBuilder();
-            selectFormBuilder.append("<p><select id=\"hero\" onchange=\"show(oldValue); oldValue = this.value\">\n" +
-                    "    <option disabled>Choose Issue</option>\n" +
-                    "    <option value=\"\"></option>\n");
-
-            for (JiraIssue issue : jqlResult.getIssues()) {
-                String key = issue.getKey();
-                HashMap<String, Object> issueFields = issue.getFields();
-
-                selectFormBuilder.append("<option value=\"")
-                        .append(key)
-                        .append("\">")
-                        .append(key)
-                        .append("</option>\n");
-                divIssueBuilder.append("<div id=\"")
-                        .append(key)
-                        .append("\" style=\"display: none\">");
-                String replacement = template;
-                replacement = replacement.replaceAll("%Key%", issue.getKey());
-                for (Map.Entry<String, Object> entry : issueFields.entrySet()) {
-                    String fieldKey = entry.getKey();
-                    Object fieldValue = entry.getValue();
-                    String color = getValueFromJson(fieldValue).toLowerCase();
-                    if (color.equals("red") || color.equals("amber") || color.equals("green")) {
-
-                    }
-                    replacement = replacement.replaceAll("%" + fieldKey + "%", getValueFromJson(fieldValue));
-                }
-                divIssueBuilder.append(replacement)
-                        .append("</div>\n");
-            }
-
-            selectFormBuilder.append("</select></p>\n<br/><div id=\"\" style=\"display: none\"></div>\n")
-                    .append(divIssueBuilder)
-                    .append("<script>\n" +
-                            "    var oldValue;\n" +
-                            "    function show(previous) {\n" +
-                            "        if (previous) {\n" +
-                            "            document.getElementById(previous).style.display = 'none';\n" +
-                            "        }\n" +
-                            "        var x = document.getElementById(\"hero\").value;\n" +
-                            "        document.getElementById(x).style.display = 'block';\n" +
-                            "    }\n" +
-                            "</script>");
-            return selectFormBuilder.toString();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             return WRONG_PAGE_ID;
@@ -364,19 +305,19 @@ public class IssueMacro implements Macro {
             }
 
             StringBuilder sb = new StringBuilder();
-            List<String> toBeSorted = new LinkedList<>();
+            List<String> valuesList = new LinkedList<>();
             for (Object o : arrayList) {
                 if (o instanceof StringMap) {
                     StringMap stringMap = (StringMap) o;
                     if (!stringMap.isEmpty()) {
-                        toBeSorted.add(getMeaningfulData(stringMap));
+                        valuesList.add(getMeaningfulData(stringMap));
                     }
                 } else if (o != null && o.toString().length() > 0) {
-                    toBeSorted.add(o.toString());
+                    valuesList.add(o.toString());
                 }
             }
-            java.util.Collections.sort(toBeSorted);
-            for (String value : toBeSorted) {
+
+            for (String value : valuesList) {
                 sb.append(value).append(", ");
             }
             if (sb.length() > 2) {
@@ -406,13 +347,75 @@ public class IssueMacro implements Macro {
         StringBuilder sb = new StringBuilder();
 
         for (Object key : stringMap.keySet()) {
-//            if (!SELF_KEY.equalsIgnoreCase(key.toString())) {
-            sb.append(key).append(FIELD_VALUES_ASSIGNMENT).append(stringMap.get(key)).append(FIELD_VALUES_SEPARATOR);
-//            }
+            if (!SELF_KEY.equalsIgnoreCase(key.toString())) {
+                sb.append(key).append(FIELD_VALUES_ASSIGNMENT).append(stringMap.get(key)).append(FIELD_VALUES_SEPARATOR);
+            }
         }
         if (sb.length() > 2) {
             sb.setLength(sb.length() - 2);
         }
         return sb.toString();
+    }
+
+    private String getTemplate(Map<String, String> map) throws NumberFormatException, NullPointerException {
+        long pageID = Long.parseLong(map.get(PAGE_ID));
+        String template = pageManager.getPage(pageID).getBodyAsString();
+        return template.substring(template.indexOf("CDATA[") + 6, template.indexOf("]]"));
+    }
+
+    private JqlResult getJqlResult(ApplicationLink applicationLink, String jql) throws UnsupportedEncodingException, CredentialsRequiredException, ResponseException {
+        ApplicationLinkRequestFactory requestFactory = applicationLink.createAuthenticatedRequestFactory();
+        String jiraRestQuery = applicationLink.getRpcUrl()
+                + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name());
+        ApplicationLinkRequest request = requestFactory.createRequest(Request.MethodType.GET, jiraRestQuery);
+        String jiraResponseContent = request.execute();
+        Gson gson = new Gson();
+        return gson.fromJson(jiraResponseContent, JqlResult.class);
+    }
+
+    private String getCompleteString(JqlResult jqlResult, String template) {
+        StringBuilder selectFormBuilder = new StringBuilder();
+        StringBuilder divIssueBuilder = new StringBuilder();
+        selectFormBuilder.append("<p><select id=\"hero\" onchange=\"show(oldValue); oldValue = this.value\">\n" +
+                "    <option disabled>Choose Issue</option>\n" +
+                "    <option value=\"\"></option>\n");
+
+        for (JiraIssue issue : jqlResult.getIssues()) {
+            String key = issue.getKey();
+            HashMap<String, Object> issueFields = issue.getFields();
+
+            selectFormBuilder.append("<option value=\"")
+                    .append(key)
+                    .append("\">")
+                    .append(key)
+                    .append("</option>\n");
+            divIssueBuilder.append("<div id=\"")
+                    .append(key)
+                    .append("\" style=\"display: none\">");
+            String replacement = template;
+            replacement = replacement.replaceAll("%Key%", issue.getKey());
+            for (Map.Entry<String, Object> entry : issueFields.entrySet()) {
+                String fieldKey = entry.getKey();
+                Object fieldValue = entry.getValue();
+                replacement = replacement.replaceAll("%" + fieldKey + "%", getValueFromJson(fieldValue));
+            }
+            divIssueBuilder.append(replacement)
+                    .append("</div>\n");
+        }
+
+        selectFormBuilder.append("</select></p>\n<br/><div id=\"\" style=\"display: none\"></div>\n")
+                .append(divIssueBuilder)
+                .append("<script>\n" +
+                        "    var oldValue;\n" +
+                        "    function show(previous) {\n" +
+                        "        if (previous) {\n" +
+                        "            document.getElementById(previous).style.display = 'none';\n" +
+                        "        }\n" +
+                        "        var x = document.getElementById(\"hero\").value;\n" +
+                        "        document.getElementById(x).style.display = 'block';\n" +
+                        "    }\n" +
+                        "</script>");
+
+        return selectFormBuilder.toString();
     }
 }
