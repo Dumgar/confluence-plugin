@@ -302,6 +302,10 @@ public class IssueMacro implements Macro {
                 for (Map.Entry<String, Object> entry : issueFields.entrySet()) {
                     String fieldKey = entry.getKey();
                     Object fieldValue = entry.getValue();
+                    String color = getValueFromJson(fieldValue).toLowerCase();
+                    if (color.equals("red") || color.equals("amber") || color.equals("green")) {
+
+                    }
                     replacement = replacement.replaceAll("%" + fieldKey + "%", getValueFromJson(fieldValue));
                 }
                 divIssueBuilder.append(replacement)
