@@ -10,6 +10,8 @@ import com.atlassian.plugin.spring.scanner.annotation.component.Scanned;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.sal.api.net.Request;
 import com.atlassian.sal.api.net.ResponseException;
+import com.epam.azn.model.History;
+import com.epam.azn.model.HistoryItem;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,7 +184,7 @@ public class IssueMacro implements Macro {
 
     private JqlResult getJqlResult(ApplicationLink applicationLink, ApplicationLinkRequestFactory requestFactory, String jql) throws UnsupportedEncodingException, CredentialsRequiredException, ResponseException {
         String jiraRestQuery = applicationLink.getRpcUrl()
-                + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name());
+                + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name()) + "&expand=changelog";
         ApplicationLinkRequest request = requestFactory.createRequest(Request.MethodType.GET, jiraRestQuery);
         String jiraResponseContent = request.execute();
         Gson gson = new Gson();
@@ -215,12 +217,13 @@ public class IssueMacro implements Macro {
                 Object fieldValue = entry.getValue();
                 String valueFromJson = getValueFromJson(fieldValue);
                 String color = valueFromJson.toLowerCase();
-                System.out.println(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey));
+//                System.out.println(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey));
                 if (color.equals("red") || color.equals("green") || color.equals("amber")) {
                     if (color.equals("amber")) {
                         color = "#FFBF00";
                     }
                     replacement = replacement.replaceAll("%" + fieldKey + "color%", color);
+                    changeOldColors(fieldKey, color, issue);
                 }
                 replacement = replacement.replaceAll("%" + fieldKey + "%", valueFromJson);
             }
@@ -242,5 +245,22 @@ public class IssueMacro implements Macro {
                         "</script>");
 
         return selectFormBuilder.toString();
+    }
+
+    private void changeOldColors(String fieldKey, String color, JiraIssue issue) {
+        Set<HistoryItem> pureItems = new HashSet<>();
+        List<History> histories = issue.getChangelog().getHistories();
+        for (History history : histories) {
+            for (HistoryItem historyItem : history.getItems()) {
+                if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
+                    pureItems.add(historyItem);
+
+                }
+            }
+        }
+        for (HistoryItem pureItem : pureItems) {
+            System.out.println(issue.getKey());
+            System.out.println(pureItem.getField());
+        }
     }
 }

@@ -5,6 +5,8 @@
 
 package com.epam.azn;
 
+import com.epam.azn.model.ChangeLog;
+
 import java.util.HashMap;
 
 public class JiraIssue {
@@ -12,6 +14,16 @@ public class JiraIssue {
     private String self;
     private String key;
     private HashMap<String, Object> fields;
+    private ChangeLog changelog;
+
+    public ChangeLog getChangelog() {
+        return changelog;
+    }
+
+    public void setChangelog(ChangeLog changelog) {
+
+        this.changelog = changelog;
+    }
 
     public String getId() {
         return id;
