@@ -29,6 +29,7 @@ public class IssueMacro implements Macro {
     private static final String FIELD_VALUES_SEPARATOR = ", ";
     private final ApplicationLinkService applicationLinkService;
     private final PageManager pageManager;
+    private final JiraFieldMetadataCache jiraFieldMetadataCache;
 
     private static final String JIRA_AUTH_MSG_START = "In order to proceed <a href=\"";
     private static final String JIRA_AUTH_MSG_END = "\">click here to authorize in JIRA.</a>";
@@ -43,9 +44,10 @@ public class IssueMacro implements Macro {
     private static final String APPLICATION_LINK_MSG = "In order to proceed configure Application Link to JIRA or contact your administrator to do it.";
 
     @Autowired
-    public IssueMacro(@ComponentImport final ApplicationLinkService applicationLinkService, @ComponentImport final PageManager pageManager) {
+    public IssueMacro(@ComponentImport final ApplicationLinkService applicationLinkService, @ComponentImport final PageManager pageManager, final JiraFieldMetadataCache jiraFieldMetadataCache) {
         this.applicationLinkService = applicationLinkService;
         this.pageManager = pageManager;
+        this.jiraFieldMetadataCache = jiraFieldMetadataCache;
     }
 
     public String execute(Map<String, String> map, String s, ConversionContext conversionContext) throws MacroExecutionException {
@@ -62,193 +64,6 @@ public class IssueMacro implements Macro {
             return "Page with this ID does not exist";
         }
 
-//        String template = "<DIV class=\"contentLayout2\">\n" +
-//                "    <DIV class=\"columnLayout single\" data-layout=\"single\">\n" +
-//                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
-//                "            <DIV class=\"innerCell\">\n" +
-//                "                <H1 id=\"TestReportingPage-Project:%project%\">Project:&nbsp;%project%</H1>\n" +
-//                "                <P>Key:&nbsp;%Key%&nbsp;</P>\n" +
-//                "                <P>Reporter:&nbsp;%reporter%</P>\n" +
-//                "                <P>Summary: %summary%&nbsp;</P>\n" +
-//                "                <P>&nbsp;</P></DIV>\n" +
-//                "        </DIV>\n" +
-//                "    </DIV>\n" +
-//                "    <DIV class=\"columnLayout two-equal\" data-layout=\"two-equal\">\n" +
-//                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
-//                "            <DIV class=\"innerCell\">\n" +
-//                "                <DIV class=\"table-wrap\">\n" +
-//                "                    <TABLE class=\"confluenceTable\">\n" +
-//                "                        <TBODY>\n" +
-//                "                        <TR>\n" +
-//                "                            <TH class=\"confluenceTh\" colspan=\"2\">\n" +
-//                "                                <H2 id=\"TestReportingPage-KEYSTAKEHOLDERS\"><STRONG>KEY\n" +
-//                "                                    STAKEHOLDERS</STRONG></H2></TH>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Checkbox</P></TD>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>%customfield_10000%&nbsp;</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Resolution</P></TD>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P style=\"text-align: left;\">%resolution%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Last Viewed</P></TD>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>%lastViewed%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Watches</P></TD>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>%watches%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        </TBODY>\n" +
-//                "                    </TABLE>\n" +
-//                "                </DIV>\n" +
-//                "                <P>&nbsp;</P>\n" +
-//                "                <P>&nbsp;</P></DIV>\n" +
-//                "        </DIV>\n" +
-//                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
-//                "            <DIV class=\"innerCell\">\n" +
-//                "                <DIV class=\"table-wrap\">\n" +
-//                "                    <TABLE class=\"confluenceTable\">\n" +
-//                "                        <TBODY>\n" +
-//                "                        <TR>\n" +
-//                "                            <TH class=\"confluenceTh\">\n" +
-//                "                                <H2 id=\"TestReportingPage-ASSESSMENT\"><STRONG>ASSESSMENT</STRONG></H2></TH>\n" +
-//                "                            <TH class=\"confluenceTh\">\n" +
-//                "                                <H2 id=\"TestReportingPage-PREVIOUS\"><STRONG>PREVIOUS</STRONG></H2></TH>\n" +
-//                "                            <TH class=\"confluenceTh\">\n" +
-//                "                                <H2 id=\"TestReportingPage-CURRENT\"><STRONG>CURRENT</STRONG></H2></TH>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Overall schedule</P></TD>\n" +
-//                "                            <TD class=\"highlight-red confluenceTd\" data-highlight-colour=\"red\">\n" +
-//                "                                <P>%colorFiled1prev%</P></TD>\n" +
-//                "                            <TD class=\"highlight-green confluenceTd\" data-highlight-colour=\"green\">\n" +
-//                "                                <P>%colorFiled1%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Budget</P></TD>\n" +
-//                "                            <TD class=\"highlight-yellow confluenceTd\" data-highlight-colour=\"yellow\">\n" +
-//                "                                <P>%colorFiled2prev%</P></TD>\n" +
-//                "                            <TD class=\"highlight-yellow confluenceTd\" data-highlight-colour=\"yellow\">\n" +
-//                "                                <P>%colorFiled2%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Resources</P></TD>\n" +
-//                "                            <TD class=\"highlight-green confluenceTd\" data-highlight-colour=\"green\">\n" +
-//                "                                <P>%colorFiled3prev%</P></TD>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>%colorFiled3%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Scope</P></TD>\n" +
-//                "                            <TD class=\"highlight-red confluenceTd\" data-highlight-colour=\"red\">\n" +
-//                "                                <P>%colorFiled4prev%</P></TD>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>%colorFiled4%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        </TBODY>\n" +
-//                "                    </TABLE>\n" +
-//                "                </DIV>\n" +
-//                "                <P>&nbsp;</P>\n" +
-//                "                <P>&nbsp;</P></DIV>\n" +
-//                "        </DIV>\n" +
-//                "    </DIV>\n" +
-//                "    <DIV class=\"columnLayout two-equal\" data-layout=\"two-equal\">\n" +
-//                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
-//                "            <DIV class=\"innerCell\">\n" +
-//                "                <DIV class=\"table-wrap\">\n" +
-//                "                    <TABLE class=\"confluenceTable\">\n" +
-//                "                        <TBODY>\n" +
-//                "                        <TR>\n" +
-//                "                            <TH class=\"confluenceTh\">\n" +
-//                "                                <H2 id=\"TestReportingPage-ACTIVITIES\"><STRONG>ACTIVITIES</STRONG></H2>\n" +
-//                "                                <P>&nbsp;</P></TH>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\" colspan=\"1\">\n" +
-//                "                                <P>Accomplishments since last update:</P>\n" +
-//                "                                <P>%field5%</P>&nbsp;</TD>\n" +
-//                "                        </TR>\n" +
-//                "                        </TBODY>\n" +
-//                "                    </TABLE>\n" +
-//                "                </DIV>\n" +
-//                "            </DIV>\n" +
-//                "        </DIV>\n" +
-//                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
-//                "            <DIV class=\"innerCell\">\n" +
-//                "                <DIV class=\"table-wrap\">\n" +
-//                "                    <TABLE class=\"confluenceTable\">\n" +
-//                "                        <TBODY>\n" +
-//                "                        <TR>\n" +
-//                "                            <TH class=\"confluenceTh\">\n" +
-//                "                                <H2 id=\"TestReportingPage-ISSUE/RISKMANAGEMENT\"><STRONG>&nbsp;ISSUE / RISK\n" +
-//                "                                    MANAGEMENT</STRONG></H2></TH>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>%field6%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        </TBODY>\n" +
-//                "                    </TABLE>\n" +
-//                "                </DIV>\n" +
-//                "            </DIV>\n" +
-//                "        </DIV>\n" +
-//                "    </DIV>\n" +
-//                "    <DIV class=\"columnLayout two-equal\" data-layout=\"two-equal\">\n" +
-//                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
-//                "            <DIV class=\"innerCell\">\n" +
-//                "                <DIV class=\"table-wrap\">\n" +
-//                "                    <TABLE class=\"confluenceTable\">\n" +
-//                "                        <TBODY>\n" +
-//                "                        <TR>\n" +
-//                "                            <TH class=\"confluenceTh\">\n" +
-//                "                                <P>&nbsp;DECISIONS / CLARIFICATIONS</P></TH>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>Decisions since last update:&nbsp;&nbsp;<BR>\n" +
-//                "                                    %field7%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        </TBODY>\n" +
-//                "                    </TABLE>\n" +
-//                "                </DIV>\n" +
-//                "            </DIV>\n" +
-//                "        </DIV>\n" +
-//                "        <DIV class=\"cell normal\" data-type=\"normal\">\n" +
-//                "            <DIV class=\"innerCell\">\n" +
-//                "                <DIV class=\"table-wrap\">\n" +
-//                "                    <TABLE class=\"confluenceTable\">\n" +
-//                "                        <TBODY>\n" +
-//                "                        <TR>\n" +
-//                "                            <TH class=\"confluenceTh\">\n" +
-//                "                                <P>UPCOMING MILESTONES</P></TH>\n" +
-//                "                        </TR>\n" +
-//                "                        <TR>\n" +
-//                "                            <TD class=\"confluenceTd\">\n" +
-//                "                                <P>%field8%</P></TD>\n" +
-//                "                        </TR>\n" +
-//                "                        </TBODY>\n" +
-//                "                    </TABLE>\n" +
-//                "                </DIV>\n" +
-//                "            </DIV>\n" +
-//                "        </DIV>\n" +
-//                "    </DIV>\n" +
-//                "</DIV>";
-
-
         String jql = map.get(JQL_KEY);
         if (jql == null || jql.length() < 1) {
             return "";
@@ -260,9 +75,11 @@ public class IssueMacro implements Macro {
             return APPLICATION_LINK_MSG;
         }
 
+        ApplicationLinkRequestFactory requestFactory = applicationLink.createAuthenticatedRequestFactory();
+
         try {
 
-            JqlResult jqlResult = getJqlResult(applicationLink, jql);
+            JqlResult jqlResult = getJqlResult(applicationLink, requestFactory, jql);
 
             return getCompleteString(jqlResult, template);
 
@@ -363,8 +180,7 @@ public class IssueMacro implements Macro {
         return template.substring(template.indexOf("CDATA[") + 6, template.indexOf("]]"));
     }
 
-    private JqlResult getJqlResult(ApplicationLink applicationLink, String jql) throws UnsupportedEncodingException, CredentialsRequiredException, ResponseException {
-        ApplicationLinkRequestFactory requestFactory = applicationLink.createAuthenticatedRequestFactory();
+    private JqlResult getJqlResult(ApplicationLink applicationLink, ApplicationLinkRequestFactory requestFactory, String jql) throws UnsupportedEncodingException, CredentialsRequiredException, ResponseException {
         String jiraRestQuery = applicationLink.getRpcUrl()
                 + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name());
         ApplicationLinkRequest request = requestFactory.createRequest(Request.MethodType.GET, jiraRestQuery);
@@ -399,8 +215,9 @@ public class IssueMacro implements Macro {
                 Object fieldValue = entry.getValue();
                 String valueFromJson = getValueFromJson(fieldValue);
                 String color = valueFromJson.toLowerCase();
-                if (color.equals("red") || color.equals("green") || color.equals("amber")){
-                    if (color.equals("amber")){
+                System.out.println(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey));
+                if (color.equals("red") || color.equals("green") || color.equals("amber")) {
+                    if (color.equals("amber")) {
                         color = "#FFBF00";
                     }
                     replacement = replacement.replaceAll("%" + fieldKey + "color%", color);
