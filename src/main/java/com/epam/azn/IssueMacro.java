@@ -216,6 +216,7 @@ public class IssueMacro implements Macro {
                     .append("\" style=\"display: none\">");
             String replacement = template;
             replacement = replacement.replaceAll("%Key%", issue.getKey());
+            replacement = replacement.replaceAll("%systemDate%", LocalDate.now().toString("yyyy-MM-dd"));
             for (Map.Entry<String, Object> entry : issueFields.entrySet()) {
                 String fieldKey = entry.getKey();
                 Object fieldValue = entry.getValue();
