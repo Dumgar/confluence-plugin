@@ -1,0 +1,789 @@
+{
+  "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+  "id": "10105",
+  "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/10105",
+  "key": "TUTORIAL-8",
+  "fields": {
+    "issuetype": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/issuetype/10100",
+      "id": "10100",
+      "description": "",
+      "iconUrl": "http://eprupetw9112:2990/jira/secure/viewavatar?size=xsmall&avatarId=10300&avatarType=issuetype",
+      "name": "MyTask",
+      "subtask": false,
+      "avatarId": 10300
+    },
+    "components": [],
+    "timespent": null,
+    "timeoriginalestimate": null,
+    "description": null,
+    "project": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/project/10000",
+      "id": "10000",
+      "key": "TUTORIAL",
+      "name": "TUTORIAL",
+      "avatarUrls": {
+        "48x48": "http://eprupetw9112:2990/jira/secure/projectavatar?avatarId=10324",
+        "24x24": "http://eprupetw9112:2990/jira/secure/projectavatar?size=small&avatarId=10324",
+        "16x16": "http://eprupetw9112:2990/jira/secure/projectavatar?size=xsmall&avatarId=10324",
+        "32x32": "http://eprupetw9112:2990/jira/secure/projectavatar?size=medium&avatarId=10324"
+      }
+    },
+    "fixVersions": [],
+    "aggregatetimespent": null,
+    "resolution": null,
+    "timetracking": {},
+    "attachment": [],
+    "aggregatetimeestimate": null,
+    "resolutiondate": null,
+    "workratio": -1,
+    "summary": "new",
+    "lastViewed": "2016-12-27T16:17:04.995+0300",
+    "watches": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-8/watchers",
+      "watchCount": 1,
+      "isWatching": true
+    },
+    "creator": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+      "name": "admin",
+      "key": "admin",
+      "emailAddress": "admin@admin.com",
+      "avatarUrls": {
+        "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+        "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+        "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+        "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+      },
+      "displayName": "admin",
+      "active": true,
+      "timeZone": "Europe/Moscow"
+    },
+    "subtasks": [],
+    "created": "2016-12-09T11:34:51.311+0300",
+    "reporter": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+      "name": "admin",
+      "key": "admin",
+      "emailAddress": "admin@admin.com",
+      "avatarUrls": {
+        "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+        "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+        "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+        "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+      },
+      "displayName": "admin",
+      "active": true,
+      "timeZone": "Europe/Moscow"
+    },
+    "customfield_10000": [
+      {
+        "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10000",
+        "value": "Yes",
+        "id": "10000"
+      },
+      {
+        "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10001",
+        "value": "No",
+        "id": "10001"
+      }
+    ],
+    "aggregateprogress": {
+      "progress": 0,
+      "total": 0
+    },
+    "priority": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/priority/3",
+      "iconUrl": "http://eprupetw9112:2990/jira/images/icons/priorities/medium.svg",
+      "name": "Medium",
+      "id": "3"
+    },
+    "customfield_10100": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10101",
+      "value": "Green",
+      "id": "10101"
+    },
+    "customfield_10200": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10202",
+      "value": "Amber",
+      "id": "10202"
+    },
+    "customfield_10201": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10203",
+      "value": "Red",
+      "id": "10203"
+    },
+    "labels": [],
+    "environment": null,
+    "timeestimate": null,
+    "aggregatetimeoriginalestimate": null,
+    "versions": [],
+    "duedate": null,
+    "progress": {
+      "progress": 0,
+      "total": 0
+    },
+    "comment": {
+      "comments": [],
+      "maxResults": 0,
+      "total": 0,
+      "startAt": 0
+    },
+    "issuelinks": [],
+    "votes": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-8/votes",
+      "votes": 0,
+      "hasVoted": false
+    },
+    "worklog": {
+      "startAt": 0,
+      "maxResults": 20,
+      "total": 0,
+      "worklogs": []
+    },
+    "assignee": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+      "name": "admin",
+      "key": "admin",
+      "emailAddress": "admin@admin.com",
+      "avatarUrls": {
+        "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+        "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+        "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+        "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+      },
+      "displayName": "admin",
+      "active": true,
+      "timeZone": "Europe/Moscow"
+    },
+    "updated": "2016-12-27T16:17:04.828+0300",
+    "status": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/status/10101",
+      "description": "",
+      "iconUrl": "http://eprupetw9112:2990/jira/images/icons/statuses/generic.png",
+      "name": "In Middle",
+      "id": "10101",
+      "statusCategory": {
+        "self": "http://eprupetw9112:2990/jira/rest/api/2/statuscategory/4",
+        "id": 4,
+        "key": "indeterminate",
+        "colorName": "yellow",
+        "name": "In Progress"
+      }
+    }
+  },
+  "changelog": {
+    "startAt": 0,
+    "maxResults": 19,
+    "total": 19,
+    "histories": [
+      {
+        "id": "10109",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-12T17:01:29.520+0300",
+        "items": [
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10100",
+            "fromString": "Born",
+            "to": "10000",
+            "toString": "To Do"
+          }
+        ]
+      },
+      {
+        "id": "10110",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-12T17:01:31.208+0300",
+        "items": [
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10000",
+            "fromString": "To Do",
+            "to": "3",
+            "toString": "In Progress"
+          },
+          {
+            "field": "assignee",
+            "fieldtype": "jira",
+            "from": null,
+            "fromString": null,
+            "to": "admin",
+            "toString": "admin"
+          }
+        ]
+      },
+      {
+        "id": "10111",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-12T17:01:32.902+0300",
+        "items": [
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "3",
+            "fromString": "In Progress",
+            "to": "10101",
+            "toString": "In Middle"
+          }
+        ]
+      },
+      {
+        "id": "10200",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-22T16:05:32.848+0300",
+        "items": [
+          {
+            "field": "resolution",
+            "fieldtype": "jira",
+            "from": null,
+            "fromString": null,
+            "to": "10000",
+            "toString": "Done"
+          },
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10101",
+            "fromString": "In Middle",
+            "to": "10001",
+            "toString": "Done"
+          }
+        ]
+      },
+      {
+        "id": "10201",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-22T16:06:51.020+0300",
+        "items": [
+          {
+            "field": "resolution",
+            "fieldtype": "jira",
+            "from": "10000",
+            "fromString": "Done",
+            "to": null,
+            "toString": null
+          },
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10001",
+            "fromString": "Done",
+            "to": "10101",
+            "toString": "In Middle"
+          }
+        ]
+      },
+      {
+        "id": "10202",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-22T16:06:53.471+0300",
+        "items": [
+          {
+            "field": "resolution",
+            "fieldtype": "jira",
+            "from": null,
+            "fromString": null,
+            "to": "10000",
+            "toString": "Done"
+          },
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10101",
+            "fromString": "In Middle",
+            "to": "10001",
+            "toString": "Done"
+          }
+        ]
+      },
+      {
+        "id": "10203",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-22T16:06:54.848+0300",
+        "items": [
+          {
+            "field": "resolution",
+            "fieldtype": "jira",
+            "from": "10000",
+            "fromString": "Done",
+            "to": null,
+            "toString": null
+          },
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10001",
+            "fromString": "Done",
+            "to": "10000",
+            "toString": "To Do"
+          }
+        ]
+      },
+      {
+        "id": "10204",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-22T17:02:26.000+0300",
+        "items": [
+          {
+            "field": "issuetype",
+            "fieldtype": "jira",
+            "from": "10000",
+            "fromString": "Task",
+            "to": "10100",
+            "toString": "MyTask"
+          },
+          {
+            "field": "CheckField",
+            "fieldtype": "custom",
+            "from": null,
+            "fromString": null,
+            "to": "[10000, 10001]",
+            "toString": "Yes,No"
+          }
+        ]
+      },
+      {
+        "id": "10302",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T11:28:07.402+0300",
+        "items": [
+          {
+            "field": "Color",
+            "fieldtype": "custom",
+            "from": null,
+            "fromString": null,
+            "to": "10100",
+            "toString": "Red"
+          }
+        ]
+      },
+      {
+        "id": "10303",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T11:33:45.261+0300",
+        "items": [
+          {
+            "field": "Color",
+            "fieldtype": "custom",
+            "from": "10100",
+            "fromString": "Red",
+            "to": "10102",
+            "toString": "Amber"
+          }
+        ]
+      },
+      {
+        "id": "10304",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T13:20:00.887+0300",
+        "items": [
+          {
+            "field": "Color2",
+            "fieldtype": "custom",
+            "from": null,
+            "fromString": null,
+            "to": "10200",
+            "toString": "Red"
+          },
+          {
+            "field": "Color3",
+            "fieldtype": "custom",
+            "from": null,
+            "fromString": null,
+            "to": "10204",
+            "toString": "Green"
+          }
+        ]
+      },
+      {
+        "id": "10305",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T13:32:49.483+0300",
+        "items": [
+          {
+            "field": "Color3",
+            "fieldtype": "custom",
+            "from": "10204",
+            "fromString": "Green",
+            "to": "10203",
+            "toString": "Red"
+          }
+        ]
+      },
+      {
+        "id": "10306",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T13:36:32.465+0300",
+        "items": [
+          {
+            "field": "Color",
+            "fieldtype": "custom",
+            "from": "10102",
+            "fromString": "Amber",
+            "to": "10100",
+            "toString": "Red"
+          }
+        ]
+      },
+      {
+        "id": "10307",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T13:37:27.106+0300",
+        "items": [
+          {
+            "field": "Color",
+            "fieldtype": "custom",
+            "from": "10100",
+            "fromString": "Red",
+            "to": "10101",
+            "toString": "Green"
+          }
+        ]
+      },
+      {
+        "id": "10308",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T13:42:27.209+0300",
+        "items": [
+          {
+            "field": "Color2",
+            "fieldtype": "custom",
+            "from": "10200",
+            "fromString": "Red",
+            "to": "10202",
+            "toString": "Amber"
+          }
+        ]
+      },
+      {
+        "id": "10309",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T16:17:02.373+0300",
+        "items": [
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10000",
+            "fromString": "To Do",
+            "to": "3",
+            "toString": "In Progress"
+          }
+        ]
+      },
+      {
+        "id": "10310",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T16:17:03.538+0300",
+        "items": [
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "3",
+            "fromString": "In Progress",
+            "to": "10000",
+            "toString": "To Do"
+          }
+        ]
+      },
+      {
+        "id": "10311",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T16:17:04.365+0300",
+        "items": [
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "10000",
+            "fromString": "To Do",
+            "to": "3",
+            "toString": "In Progress"
+          }
+        ]
+      },
+      {
+        "id": "10312",
+        "author": {
+          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+          "name": "admin",
+          "key": "admin",
+          "emailAddress": "admin@admin.com",
+          "avatarUrls": {
+            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+          },
+          "displayName": "admin",
+          "active": true,
+          "timeZone": "Europe/Moscow"
+        },
+        "created": "2016-12-27T16:17:04.829+0300",
+        "items": [
+          {
+            "field": "status",
+            "fieldtype": "jira",
+            "from": "3",
+            "fromString": "In Progress",
+            "to": "10101",
+            "toString": "In Middle"
+          }
+        ]
+      }
+    ]
+  }
+}

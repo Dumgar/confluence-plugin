@@ -217,16 +217,17 @@ public class IssueMacro implements Macro {
                 Object fieldValue = entry.getValue();
                 String valueFromJson = getValueFromJson(fieldValue);
                 String color = valueFromJson.toLowerCase();
-//                System.out.println(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey));
+
                 if (color.equals("red") || color.equals("green") || color.equals("amber")) {
                     if (color.equals("amber")) {
                         color = "#FFBF00";
                     }
                     replacement = replacement.replaceAll("%" + fieldKey + "color%", color);
-                    changeOldColors(fieldKey, color, issue);
+                    replacement = changeOldColors(fieldKey, replacement, issue);
                 }
                 replacement = replacement.replaceAll("%" + fieldKey + "%", valueFromJson);
             }
+            replacement = replacement.replaceAll("%.*%", "-");
             divIssueBuilder.append(replacement)
                     .append("</div>\n");
         }
@@ -247,20 +248,29 @@ public class IssueMacro implements Macro {
         return selectFormBuilder.toString();
     }
 
-    private void changeOldColors(String fieldKey, String color, JiraIssue issue) {
-        Set<HistoryItem> pureItems = new HashSet<>();
+    private String changeOldColors(String fieldKey, String template, JiraIssue issue) {
+        HistoryItem item = null;
         List<History> histories = issue.getChangelog().getHistories();
         for (History history : histories) {
             for (HistoryItem historyItem : history.getItems()) {
                 if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
-                    pureItems.add(historyItem);
-
+                    item = historyItem;
                 }
             }
         }
-        for (HistoryItem pureItem : pureItems) {
-            System.out.println(issue.getKey());
-            System.out.println(pureItem.getField());
+
+        if (item == null) {
+            return template.replaceAll("%" + fieldKey + "prev%", "-");
         }
+
+        String previousValue = item.getFromString();
+        previousValue = previousValue == null ? "-" : previousValue;
+        String color = previousValue.toLowerCase();
+        color = color.equals("amber") ? "#FFBF00" : color;
+
+        String replacement = template.replaceAll("%" + fieldKey + "prev%", previousValue);
+        replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
+
+        return replacement;
     }
 }
