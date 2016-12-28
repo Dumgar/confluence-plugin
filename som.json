@@ -1,588 +1,165 @@
 {
-  "expand": "schema,names",
-  "startAt": 0,
-  "maxResults": 50,
-  "total": 4,
-  "issues": [
-    {
-      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-      "id": "10300",
-      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/10300",
-      "key": "TUTORIAL-10",
-      "fields": {
-        "issuetype": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issuetype/10100",
-          "id": "10100",
-          "description": "",
-          "iconUrl": "http://eprupetw9112:2990/jira/secure/viewavatar?size=xsmall&avatarId=10300&avatarType=issuetype",
-          "name": "MyTask",
-          "subtask": false,
-          "avatarId": 10300
-        },
-        "components": [],
-        "timespent": null,
-        "timeoriginalestimate": null,
-        "description": null,
-        "project": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/project/10000",
-          "id": "10000",
-          "key": "TUTORIAL",
-          "name": "TUTORIAL",
-          "avatarUrls": {
-            "48x48": "http://eprupetw9112:2990/jira/secure/projectavatar?avatarId=10324",
-            "24x24": "http://eprupetw9112:2990/jira/secure/projectavatar?size=small&avatarId=10324",
-            "16x16": "http://eprupetw9112:2990/jira/secure/projectavatar?size=xsmall&avatarId=10324",
-            "32x32": "http://eprupetw9112:2990/jira/secure/projectavatar?size=medium&avatarId=10324"
-          }
-        },
-        "fixVersions": [],
-        "aggregatetimespent": null,
-        "resolution": null,
-        "aggregatetimeestimate": null,
-        "resolutiondate": null,
-        "workratio": -1,
-        "summary": "ColorTest",
-        "lastViewed": "2016-12-27T11:40:11.111+0300",
-        "watches": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-10/watchers",
-          "watchCount": 1,
-          "isWatching": true
-        },
-        "creator": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "subtasks": [],
-        "created": "2016-12-26T16:19:41.000+0300",
-        "reporter": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "customfield_10000": [
-          {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10000",
-            "value": "Yes",
-            "id": "10000"
-          },
-          {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10001",
-            "value": "No",
-            "id": "10001"
-          }
-        ],
-        "aggregateprogress": {
-          "progress": 0,
-          "total": 0
-        },
-        "priority": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/priority/3",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/priorities/medium.svg",
-          "name": "Medium",
-          "id": "3"
-        },
-        "customfield_10100": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10102",
-          "value": "Amber",
-          "id": "10102"
-        },
-        "labels": [],
-        "environment": null,
-        "timeestimate": null,
-        "aggregatetimeoriginalestimate": null,
-        "versions": [],
-        "duedate": null,
-        "progress": {
-          "progress": 0,
-          "total": 0
-        },
-        "issuelinks": [],
-        "votes": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-10/votes",
-          "votes": 0,
-          "hasVoted": false
-        },
-        "assignee": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "updated": "2016-12-26T16:41:24.000+0300",
-        "status": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/status/10100",
-          "description": "",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/statuses/generic.png",
-          "name": "Born",
-          "id": "10100",
-          "statusCategory": {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/statuscategory/2",
-            "id": 2,
-            "key": "new",
-            "colorName": "blue-gray",
-            "name": "To Do"
-          }
-        }
+  "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+  "id": "10301",
+  "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/10301",
+  "key": "TUTORIAL-11",
+  "fields": {
+  "fields": {
+    "issuetype": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/issuetype/10100",
+      "id": "10100",
+      "description": "",
+      "iconUrl": "http://eprupetw9112:2990/jira/secure/viewavatar?size=xsmall&avatarId=10300&avatarType=issuetype",
+      "name": "MyTask",
+      "subtask": false,
+      "avatarId": 10300
+    },
+    "components": [],
+    "timespent": null,
+    "timeoriginalestimate": null,
+    "description": null,
+    "project": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/project/10000",
+      "id": "10000",
+      "key": "TUTORIAL",
+      "name": "TUTORIAL",
+      "avatarUrls": {
+        "48x48": "http://eprupetw9112:2990/jira/secure/projectavatar?avatarId=10324",
+        "24x24": "http://eprupetw9112:2990/jira/secure/projectavatar?size=small&avatarId=10324",
+        "16x16": "http://eprupetw9112:2990/jira/secure/projectavatar?size=xsmall&avatarId=10324",
+        "32x32": "http://eprupetw9112:2990/jira/secure/projectavatar?size=medium&avatarId=10324"
       }
     },
-    {
-      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-      "id": "10105",
-      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/10105",
-      "key": "TUTORIAL-8",
-      "fields": {
-        "issuetype": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issuetype/10100",
-          "id": "10100",
-          "description": "",
-          "iconUrl": "http://eprupetw9112:2990/jira/secure/viewavatar?size=xsmall&avatarId=10300&avatarType=issuetype",
-          "name": "MyTask",
-          "subtask": false,
-          "avatarId": 10300
-        },
-        "components": [],
-        "timespent": null,
-        "timeoriginalestimate": null,
-        "description": null,
-        "project": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/project/10000",
-          "id": "10000",
-          "key": "TUTORIAL",
-          "name": "TUTORIAL",
-          "avatarUrls": {
-            "48x48": "http://eprupetw9112:2990/jira/secure/projectavatar?avatarId=10324",
-            "24x24": "http://eprupetw9112:2990/jira/secure/projectavatar?size=small&avatarId=10324",
-            "16x16": "http://eprupetw9112:2990/jira/secure/projectavatar?size=xsmall&avatarId=10324",
-            "32x32": "http://eprupetw9112:2990/jira/secure/projectavatar?size=medium&avatarId=10324"
-          }
-        },
-        "fixVersions": [],
-        "aggregatetimespent": null,
-        "resolution": null,
-        "aggregatetimeestimate": null,
-        "resolutiondate": null,
-        "workratio": -1,
-        "summary": "new",
-        "lastViewed": "2016-12-27T11:33:45.403+0300",
-        "watches": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-8/watchers",
-          "watchCount": 1,
-          "isWatching": true
-        },
-        "creator": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "subtasks": [],
-        "created": "2016-12-09T11:34:51.000+0300",
-        "reporter": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "customfield_10000": [
-          {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10000",
-            "value": "Yes",
-            "id": "10000"
-          },
-          {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10001",
-            "value": "No",
-            "id": "10001"
-          }
-        ],
-        "aggregateprogress": {
-          "progress": 0,
-          "total": 0
-        },
-        "priority": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/priority/3",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/priorities/medium.svg",
-          "name": "Medium",
-          "id": "3"
-        },
-        "customfield_10100": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10102",
-          "value": "Amber",
-          "id": "10102"
-        },
-        "labels": [],
-        "environment": null,
-        "timeestimate": null,
-        "aggregatetimeoriginalestimate": null,
-        "versions": [],
-        "duedate": null,
-        "progress": {
-          "progress": 0,
-          "total": 0
-        },
-        "issuelinks": [],
-        "votes": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-8/votes",
-          "votes": 0,
-          "hasVoted": false
-        },
-        "assignee": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "updated": "2016-12-27T11:33:45.000+0300",
-        "status": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/status/10000",
-          "description": "",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/status_generic.gif",
-          "name": "To Do",
-          "id": "10000",
-          "statusCategory": {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/statuscategory/2",
-            "id": 2,
-            "key": "new",
-            "colorName": "blue-gray",
-            "name": "To Do"
-          }
-        }
-      }
+    "fixVersions": [],
+    "aggregatetimespent": null,
+    "resolution": null,
+    "timetracking": {},
+    "attachment": [],
+    "aggregatetimeestimate": null,
+    "resolutiondate": null,
+    "workratio": -1,
+    "summary": "aweewew",
+    "lastViewed": "2016-12-28T13:18:15.129+0300",
+    "watches": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-11/watchers",
+      "watchCount": 1,
+      "isWatching": true
     },
-    {
-      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-      "id": "10104",
-      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/10104",
-      "key": "TUTORIAL-7",
-      "fields": {
-        "issuetype": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issuetype/10100",
-          "id": "10100",
-          "description": "",
-          "iconUrl": "http://eprupetw9112:2990/jira/secure/viewavatar?size=xsmall&avatarId=10300&avatarType=issuetype",
-          "name": "MyTask",
-          "subtask": false,
-          "avatarId": 10300
-        },
-        "components": [],
-        "timespent": null,
-        "timeoriginalestimate": null,
-        "description": null,
-        "project": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/project/10000",
-          "id": "10000",
-          "key": "TUTORIAL",
-          "name": "TUTORIAL",
-          "avatarUrls": {
-            "48x48": "http://eprupetw9112:2990/jira/secure/projectavatar?avatarId=10324",
-            "24x24": "http://eprupetw9112:2990/jira/secure/projectavatar?size=small&avatarId=10324",
-            "16x16": "http://eprupetw9112:2990/jira/secure/projectavatar?size=xsmall&avatarId=10324",
-            "32x32": "http://eprupetw9112:2990/jira/secure/projectavatar?size=medium&avatarId=10324"
-          }
-        },
-        "fixVersions": [],
-        "aggregatetimespent": null,
-        "resolution": null,
-        "aggregatetimeestimate": null,
-        "resolutiondate": null,
-        "workratio": -1,
-        "summary": "hhhhh",
-        "lastViewed": "2016-12-26T12:30:51.483+0300",
-        "watches": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-7/watchers",
-          "watchCount": 1,
-          "isWatching": true
-        },
-        "creator": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "subtasks": [],
-        "created": "2016-12-08T17:59:12.000+0300",
-        "reporter": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "customfield_10000": [
-          {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10000",
-            "value": "Yes",
-            "id": "10000"
-          }
-        ],
-        "aggregateprogress": {
-          "progress": 0,
-          "total": 0
-        },
-        "priority": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/priority/3",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/priorities/medium.svg",
-          "name": "Medium",
-          "id": "3"
-        },
-        "customfield_10100": null,
-        "labels": [],
-        "environment": null,
-        "timeestimate": null,
-        "aggregatetimeoriginalestimate": null,
-        "versions": [],
-        "duedate": null,
-        "progress": {
-          "progress": 0,
-          "total": 0
-        },
-        "issuelinks": [],
-        "votes": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-7/votes",
-          "votes": 0,
-          "hasVoted": false
-        },
-        "assignee": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "updated": "2016-12-26T12:30:50.000+0300",
-        "status": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/status/10101",
-          "description": "",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/statuses/generic.png",
-          "name": "In Middle",
-          "id": "10101",
-          "statusCategory": {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/statuscategory/4",
-            "id": 4,
-            "key": "indeterminate",
-            "colorName": "yellow",
-            "name": "In Progress"
-          }
-        }
-      }
+    "creator": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+      "name": "admin",
+      "key": "admin",
+      "emailAddress": "admin@admin.com",
+      "avatarUrls": {
+        "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+        "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+        "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+        "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+      },
+      "displayName": "admin",
+      "active": true,
+      "timeZone": "Europe/Moscow"
     },
-    {
-      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
-      "id": "10103",
-      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/10103",
-      "key": "TUTORIAL-6",
-      "fields": {
-        "issuetype": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issuetype/10000",
-          "id": "10000",
-          "description": "A task that needs to be done.",
-          "iconUrl": "http://eprupetw9112:2990/jira/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
-          "name": "Task",
-          "subtask": false,
-          "avatarId": 10318
-        },
-        "components": [],
-        "timespent": null,
-        "timeoriginalestimate": null,
-        "description": null,
-        "project": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/project/10000",
-          "id": "10000",
-          "key": "TUTORIAL",
-          "name": "TUTORIAL",
-          "avatarUrls": {
-            "48x48": "http://eprupetw9112:2990/jira/secure/projectavatar?avatarId=10324",
-            "24x24": "http://eprupetw9112:2990/jira/secure/projectavatar?size=small&avatarId=10324",
-            "16x16": "http://eprupetw9112:2990/jira/secure/projectavatar?size=xsmall&avatarId=10324",
-            "32x32": "http://eprupetw9112:2990/jira/secure/projectavatar?size=medium&avatarId=10324"
-          }
-        },
-        "fixVersions": [],
-        "aggregatetimespent": null,
-        "resolution": null,
-        "aggregatetimeestimate": null,
-        "resolutiondate": null,
-        "workratio": -1,
-        "summary": "ffgdgdfgd",
-        "lastViewed": "2016-12-12T15:48:40.710+0300",
-        "watches": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-6/watchers",
-          "watchCount": 1,
-          "isWatching": true
-        },
-        "creator": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "subtasks": [],
-        "created": "2016-12-08T17:58:43.000+0300",
-        "reporter": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "customfield_10000": null,
-        "aggregateprogress": {
-          "progress": 0,
-          "total": 0
-        },
-        "priority": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/priority/3",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/priorities/medium.svg",
-          "name": "Medium",
-          "id": "3"
-        },
-        "customfield_10100": null,
-        "labels": [],
-        "environment": null,
-        "timeestimate": null,
-        "aggregatetimeoriginalestimate": null,
-        "versions": [],
-        "duedate": null,
-        "progress": {
-          "progress": 0,
-          "total": 0
-        },
-        "issuelinks": [],
-        "votes": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-6/votes",
-          "votes": 0,
-          "hasVoted": false
-        },
-        "assignee": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
-          "name": "admin",
-          "key": "admin",
-          "emailAddress": "admin@admin.com",
-          "avatarUrls": {
-            "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
-            "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
-            "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
-            "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
-          },
-          "displayName": "admin",
-          "active": true,
-          "timeZone": "Europe/Moscow"
-        },
-        "updated": "2016-12-12T15:48:36.000+0300",
-        "status": {
-          "self": "http://eprupetw9112:2990/jira/rest/api/2/status/3",
-          "description": "This issue is being actively worked on at the moment by the assignee.",
-          "iconUrl": "http://eprupetw9112:2990/jira/images/icons/statuses/inprogress.png",
-          "name": "In Progress",
-          "id": "3",
-          "statusCategory": {
-            "self": "http://eprupetw9112:2990/jira/rest/api/2/statuscategory/4",
-            "id": 4,
-            "key": "indeterminate",
-            "colorName": "yellow",
-            "name": "In Progress"
-          }
-        }
+    "subtasks": [],
+    "created": "2016-12-28T13:00:04.081+0300",
+    "reporter": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+      "name": "admin",
+      "key": "admin",
+      "emailAddress": "admin@admin.com",
+      "avatarUrls": {
+        "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+        "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+        "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+        "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+      },
+      "displayName": "admin",
+      "active": true,
+      "timeZone": "Europe/Moscow"
+    },
+    "customfield_10000": null,
+    "aggregateprogress": {
+      "progress": 0,
+      "total": 0
+    },
+    "priority": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/priority/3",
+      "iconUrl": "http://eprupetw9112:2990/jira/images/icons/priorities/medium.svg",
+      "name": "Medium",
+      "id": "3"
+    },
+    "customfield_10100": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10100",
+      "value": "Red",
+      "id": "10100"
+    },
+    "customfield_10200": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10200",
+      "value": "Red",
+      "id": "10200"
+    },
+    "customfield_10201": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/customFieldOption/10203",
+      "value": "Red",
+      "id": "10203"
+    },
+    "labels": [],
+    "environment": null,
+    "timeestimate": null,
+    "aggregatetimeoriginalestimate": null,
+    "versions": [],
+    "duedate": null,
+    "progress": {
+      "progress": 0,
+      "total": 0
+    },
+    "comment": {
+      "comments": [],
+      "maxResults": 0,
+      "total": 0,
+      "startAt": 0
+    },
+    "issuelinks": [],
+    "votes": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/issue/TUTORIAL-11/votes",
+      "votes": 0,
+      "hasVoted": false
+    },
+    "worklog": {
+      "startAt": 0,
+      "maxResults": 20,
+      "total": 0,
+      "worklogs": []
+    },
+    "assignee": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/user?username=admin",
+      "name": "admin",
+      "key": "admin",
+      "emailAddress": "admin@admin.com",
+      "avatarUrls": {
+        "48x48": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=48",
+        "24x24": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=24",
+        "16x16": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=16",
+        "32x32": "http://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mm&s=32"
+      },
+      "displayName": "admin",
+      "active": true,
+      "timeZone": "Europe/Moscow"
+    },
+    "updated": "2016-12-28T13:18:15.020+0300",
+    "status": {
+      "self": "http://eprupetw9112:2990/jira/rest/api/2/status/10100",
+      "description": "",
+      "iconUrl": "http://eprupetw9112:2990/jira/images/icons/statuses/generic.png",
+      "name": "Born",
+      "id": "10100",
+      "statusCategory": {
+        "self": "http://eprupetw9112:2990/jira/rest/api/2/statuscategory/2",
+        "id": 2,
+        "key": "new",
+        "colorName": "blue-gray",
+        "name": "To Do"
       }
     }
-  ]
+  }
 }

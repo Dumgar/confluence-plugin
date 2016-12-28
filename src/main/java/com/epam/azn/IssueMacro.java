@@ -229,10 +229,12 @@ public class IssueMacro implements Macro {
                         color = "#FFBF00";
                     }
                     replacement = replacement.replaceAll("%" + fieldKey + "color%", color);
-                    replacement = changeOldColors(fieldKey, replacement, issue, date);
+                    replacement = changeOldColors(fieldKey, replacement, issue, date, valueFromJson);
                 }
                 replacement = replacement.replaceAll("%" + fieldKey + "%", valueFromJson);
             }
+            replacement = replacement.replaceAll("%.*color%", "#FFF0F5");
+            replacement = replacement.replaceAll("%.*colorprev%", "#FFF0F5");
             replacement = replacement.replaceAll("%.*%", "-");
             divIssueBuilder.append(replacement)
                     .append("</div>\n");
@@ -254,17 +256,38 @@ public class IssueMacro implements Macro {
         return selectFormBuilder.toString();
     }
 
-    private String changeOldColors(String fieldKey, String template, JiraIssue issue, LocalDate date) {
+    private String changeOldColors(String fieldKey, String template, JiraIssue issue, LocalDate date, String valueFromJson) {
+        boolean flagEmpty = false;
         HistoryItem item = null;
         List<History> histories = issue.getChangelog().getHistories();
         for (History history : histories) {
-            LocalDate creationDate = LocalDateTime.parse(history.getCreated()).toLocalDate();
-            if (creationDate.isBefore(date) || creationDate.isEqual(date)) {
-                for (HistoryItem historyItem : history.getItems()) {
-                    if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
+            String created = history.getCreated();
+            LocalDate creationDate = LocalDate.parse(created.substring(0, created.indexOf('T')));
+
+            for (HistoryItem historyItem : history.getItems()) {
+                if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
+                    flagEmpty = true;
+                    if (creationDate.isBefore(date) || creationDate.isEqual(date)) {
                         item = historyItem;
                     }
                 }
+            }
+        }
+
+        if (!flagEmpty){
+            String created = (String) issue.getFields().get("created");
+            LocalDate issueCreated = LocalDate.parse(created.substring(0, created.indexOf('T')));
+            String color = valueFromJson.toLowerCase();
+            color = color.equals("amber") ? "#FFBF00" : color;
+            color = color.equals("-") ? "#FFF0F5" : color;
+            if (date.isAfter(issueCreated) || date.isEqual(issueCreated)){
+                String replacement = template.replaceAll("%" + fieldKey + "prev%", valueFromJson);
+                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
+                return replacement;
+            } else {
+                String replacement = template.replaceAll("%" + fieldKey + "prev%", "-");
+                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", "#FFF0F5");
+                return replacement;
             }
         }
 
@@ -272,11 +295,11 @@ public class IssueMacro implements Macro {
             return template.replaceAll("%" + fieldKey + "prev%", "-");
         }
 
-        String previousValue = item.getFromString();
+        String previousValue = item.getToString();
         previousValue = previousValue == null ? "-" : previousValue;
         String color = previousValue.toLowerCase();
         color = color.equals("amber") ? "#FFBF00" : color;
-
+        color = color.equals("-") ? "#FFF0F5" : color;
         String replacement = template.replaceAll("%" + fieldKey + "prev%", previousValue);
         replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
 

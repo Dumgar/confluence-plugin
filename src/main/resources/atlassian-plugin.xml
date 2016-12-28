@@ -25,7 +25,7 @@
         <parameters>
             <parameter name="jqlString" type="string" required="true" />
             <parameter name="pageID" type="string" required="true" />
-            <parameter name="days" type="string" required="false" />
+            <parameter name="days" type="string" required="true" />
         </parameters>
     </xhtml-macro>
     

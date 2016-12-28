@@ -1,4 +1,4 @@
-For inserting the value surround the ID of the field by '%'.
+To insert the value surround the ID of the field by '%'.
 Example:
     %customFieldID% will be replaced by value of customFieldID
 
