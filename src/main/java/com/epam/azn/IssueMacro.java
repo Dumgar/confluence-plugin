@@ -15,6 +15,7 @@ import com.epam.azn.model.HistoryItem;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.UnsupportedEncodingException;
@@ -257,7 +258,7 @@ public class IssueMacro implements Macro {
         HistoryItem item = null;
         List<History> histories = issue.getChangelog().getHistories();
         for (History history : histories) {
-            LocalDate creationDate = LocalDate.parse(history.getCreated());
+            LocalDate creationDate = LocalDateTime.parse(history.getCreated()).toLocalDate();
             if (creationDate.isBefore(date) || creationDate.isEqual(date)) {
                 for (HistoryItem historyItem : history.getItems()) {
                     if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
