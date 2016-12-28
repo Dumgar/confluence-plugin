@@ -1,6 +1,13 @@
+To use template create blank page and choose Noformat macro. Insert template in macro field.
+Required parameters of IssueMacro:
+- JQL request
+- ID of the page with template
+- Amount of days
+
 To insert the value surround the ID of the field by '%'.
 Example:
     %customFieldID% will be replaced by value of customFieldID
+    %systemDate% will be replaced by current date
 
 For colored fields and values:
     %coloredFieldID%  -- for value
