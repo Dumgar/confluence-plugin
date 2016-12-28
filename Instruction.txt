@@ -1,0 +1,21 @@
+For inserting the value surround the ID of the field by '%'.
+Example:
+    %customFieldID% will be replaced by value of customFieldID
+
+For colored fields and values:
+    %coloredFieldID%  -- for value
+    %coloredFieldIDprev%  -- for value days ago
+
+    %coloredFieldIDcolor% -- will be replaced by the field value (red, green, amber)
+    %coloredFieldIDcolorprev%  -- will be replaced by the field value (red, green, amber) days ago
+
+Example:
+
+                            <TR>
+                                <TD class="confluenceTd">
+                                    <P>Color</P></TD>
+                                <TD bgcolor="%customfield_10100colorprev%">
+                                    <P>%customfield_10100prev%</P></TD>
+                                <TD bgcolor="%customfield_10100color%">
+                                    <P>%customfield_10100%</P></TD>
+                            </TR>
