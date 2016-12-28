@@ -14,6 +14,7 @@ import com.epam.azn.model.History;
 import com.epam.azn.model.HistoryItem;
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.UnsupportedEncodingException;
@@ -54,13 +55,16 @@ public class IssueMacro implements Macro {
 
     public String execute(Map<String, String> map, String s, ConversionContext conversionContext) throws MacroExecutionException {
 
+        LocalDate date;
+
         String template;
 
         try {
+            date = LocalDate.now().minusDays(Integer.parseInt(map.get("days")));
             template = getTemplate(map);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return "ID must be a number";
+            return "ID and amount of Days must be a number";
         } catch (NullPointerException e) {
             e.printStackTrace();
             return "Page with this ID does not exist";
@@ -83,7 +87,7 @@ public class IssueMacro implements Macro {
 
             JqlResult jqlResult = getJqlResult(applicationLink, requestFactory, jql);
 
-            return getCompleteString(jqlResult, template);
+            return getCompleteString(jqlResult, template, date);
 
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -191,7 +195,7 @@ public class IssueMacro implements Macro {
         return gson.fromJson(jiraResponseContent, JqlResult.class);
     }
 
-    private String getCompleteString(JqlResult jqlResult, String template) {
+    private String getCompleteString(JqlResult jqlResult, String template, LocalDate date) {
         StringBuilder selectFormBuilder = new StringBuilder();
         StringBuilder divIssueBuilder = new StringBuilder();
         selectFormBuilder.append("<p><select id=\"hero\" onchange=\"show(oldValue); oldValue = this.value\">\n" +
@@ -223,7 +227,7 @@ public class IssueMacro implements Macro {
                         color = "#FFBF00";
                     }
                     replacement = replacement.replaceAll("%" + fieldKey + "color%", color);
-                    replacement = changeOldColors(fieldKey, replacement, issue);
+                    replacement = changeOldColors(fieldKey, replacement, issue, date);
                 }
                 replacement = replacement.replaceAll("%" + fieldKey + "%", valueFromJson);
             }
@@ -248,13 +252,16 @@ public class IssueMacro implements Macro {
         return selectFormBuilder.toString();
     }
 
-    private String changeOldColors(String fieldKey, String template, JiraIssue issue) {
+    private String changeOldColors(String fieldKey, String template, JiraIssue issue, LocalDate date) {
         HistoryItem item = null;
         List<History> histories = issue.getChangelog().getHistories();
         for (History history : histories) {
-            for (HistoryItem historyItem : history.getItems()) {
-                if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
-                    item = historyItem;
+            LocalDate creationDate = LocalDate.parse(history.getCreated());
+            if (creationDate.isBefore(date) || creationDate.isEqual(date)) {
+                for (HistoryItem historyItem : history.getItems()) {
+                    if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
+                        item = historyItem;
+                    }
                 }
             }
         }
