@@ -3,9 +3,9 @@ package com.epam.azn.model;
 import java.util.List;
 
 public class History {
-    String created;
+    private String created;
 
-    List<HistoryItem> items;
+    private List<HistoryItem> items;
 
     public History() {
     }

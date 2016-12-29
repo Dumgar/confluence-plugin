@@ -1,8 +1,8 @@
 package com.epam.azn.model;
 
 public class IssueWithHistory {
-    String key;
-    ChangeLog changelog;
+    private String key;
+    private ChangeLog changelog;
 
     public IssueWithHistory() {
     }

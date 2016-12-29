@@ -11,7 +11,7 @@ public class ChangeLog {
         this.histories = histories;
     }
 
-    List<History> histories;
+    private List<History> histories;
 
     public List<History> getHistories() {
         return histories;

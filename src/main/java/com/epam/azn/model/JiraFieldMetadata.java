@@ -1,4 +1,4 @@
-package com.epam.azn.pojo;
+package com.epam.azn.model;
 
 public class JiraFieldMetadata {
 

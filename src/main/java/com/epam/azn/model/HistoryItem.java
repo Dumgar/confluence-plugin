@@ -1,9 +1,9 @@
 package com.epam.azn.model;
 
 public class HistoryItem {
-    String field;
-    String fromString;
-    String toString;
+    private String field;
+    private String fromString;
+    private String toString;
 
     public HistoryItem() {
     }

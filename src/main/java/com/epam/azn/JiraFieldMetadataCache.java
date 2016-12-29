@@ -5,7 +5,7 @@ import com.atlassian.applinks.api.application.jira.JiraApplicationType;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.sal.api.net.Request;
 import com.atlassian.sal.api.net.ResponseException;
-import com.epam.azn.pojo.JiraFieldMetadata;
+import com.epam.azn.model.JiraFieldMetadata;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;

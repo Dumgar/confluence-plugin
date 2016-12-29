@@ -1,9 +1,5 @@
-/*
- * Canadian Tire Corporation, Ltd. Do not reproduce without permission in writing.
- * Copyright (c) 2016 Canadian Tire Corporation, Ltd. All rights reserved.
- */
 
-package com.epam.azn;
+package com.epam.azn.model;
 
 import java.util.List;
 
