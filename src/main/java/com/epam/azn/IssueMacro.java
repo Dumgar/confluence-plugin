@@ -32,6 +32,8 @@ public class IssueMacro implements Macro {
     private static final String SELF_KEY = "self";
     private static final String FIELD_VALUES_ASSIGNMENT = ": ";
     private static final String FIELD_VALUES_SEPARATOR = ", ";
+    private static final String EMPTY_STRING = "";
+    private static final String DEFAULT_RETURN_VALUE = "-";
     private final ApplicationLinkService applicationLinkService;
     private final PageManager pageManager;
     private final JiraFieldMetadataCache jiraFieldMetadataCache;
@@ -48,6 +50,24 @@ public class IssueMacro implements Macro {
     private static final String PAGE_ID = "pageID";
     private static final String APPLICATION_LINK_MSG = "In order to proceed configure Application Link to JIRA or contact your administrator to do it.";
 
+    private static final String PARAMETER_DAYS = "days";
+    private static final String NUMBER_FORMAT_EXCEPTION_MESSAGE = "ID and amount of Days must be a number";
+    private static final String NULL_POINTER_EXCEPTION = "Page with this ID does not exist";
+
+    private static final String NOFORMAT_BLOCK_START = "CDATA[";
+    private static final String NOFORMAT_BLOCK_END = "]]";
+    private static final String REST_ATTR_CHANGELOG = "&expand=changelog";
+    private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd";
+
+    private static final String COLOR_RED = "red";
+    private static final String COLOR_GREEN = "green";
+    private static final String COLOR_AMBER = "amber";
+    private static final String COLOR_AMBER_DIG = "FFBF00";
+    private static final String COLOR_DEFAULT = "FFF0F5";
+
+    private static final Character DATE_TIME_SEPARATOR = 'T';
+    private static final String CREATED_FIELD_KEY = "created";
+
     @Autowired
     public IssueMacro(@ComponentImport final ApplicationLinkService applicationLinkService, @ComponentImport final PageManager pageManager, final JiraFieldMetadataCache jiraFieldMetadataCache) {
         this.applicationLinkService = applicationLinkService;
@@ -62,19 +82,19 @@ public class IssueMacro implements Macro {
         String template;
 
         try {
-            date = LocalDate.now().minusDays(Integer.parseInt(map.get("days")));
+            date = LocalDate.now().minusDays(Integer.parseInt(map.get(PARAMETER_DAYS)));
             template = getTemplate(map);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return "ID and amount of Days must be a number";
+            return NUMBER_FORMAT_EXCEPTION_MESSAGE;
         } catch (NullPointerException e) {
             e.printStackTrace();
-            return "Page with this ID does not exist";
+            return NULL_POINTER_EXCEPTION;
         }
 
         String jql = map.get(JQL_KEY);
         if (jql == null || jql.length() < 1) {
-            return "";
+            return EMPTY_STRING;
         }
 
         ApplicationLink applicationLink = applicationLinkService.getPrimaryApplicationLink(JiraApplicationType.class);
@@ -116,7 +136,7 @@ public class IssueMacro implements Macro {
 
     private String getValueFromJson(Object data) {
         if (data == null) {
-            return "-";
+            return DEFAULT_RETURN_VALUE;
         }
 
         if (data instanceof String) {
@@ -126,7 +146,7 @@ public class IssueMacro implements Macro {
         if (data instanceof ArrayList) {
             ArrayList arrayList = (ArrayList) data;
             if (arrayList.isEmpty()) {
-                return "-";
+                return DEFAULT_RETURN_VALUE;
             }
 
             StringBuilder sb = new StringBuilder();
@@ -143,7 +163,7 @@ public class IssueMacro implements Macro {
             }
 
             for (String value : valuesList) {
-                sb.append(value).append(", ");
+                sb.append(value).append(FIELD_VALUES_SEPARATOR);
             }
             if (sb.length() > 2) {
                 sb.setLength(sb.length() - 2);
@@ -154,7 +174,7 @@ public class IssueMacro implements Macro {
         if (data instanceof StringMap) {
             StringMap stringMap = (StringMap) data;
             if (stringMap.isEmpty()) {
-                return "-";
+                return DEFAULT_RETURN_VALUE;
             }
             return getMeaningfulData(stringMap);
         }
@@ -185,12 +205,13 @@ public class IssueMacro implements Macro {
     private String getTemplate(Map<String, String> map) throws NumberFormatException, NullPointerException {
         long pageID = Long.parseLong(map.get(PAGE_ID));
         String template = pageManager.getPage(pageID).getBodyAsString();
-        return template.substring(template.indexOf("CDATA[") + 6, template.indexOf("]]"));
+        return template.substring(template.indexOf(NOFORMAT_BLOCK_START) + 6, template.indexOf(NOFORMAT_BLOCK_END));
     }
 
-    private JqlResult getJqlResult(ApplicationLink applicationLink, ApplicationLinkRequestFactory requestFactory, String jql) throws UnsupportedEncodingException, CredentialsRequiredException, ResponseException {
+    private JqlResult getJqlResult(ApplicationLink applicationLink, ApplicationLinkRequestFactory requestFactory, String jql)
+            throws UnsupportedEncodingException, CredentialsRequiredException, ResponseException {
         String jiraRestQuery = applicationLink.getRpcUrl()
-                + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name()) + "&expand=changelog";
+                + ISSUES_BY_JQL_REST_API_URL + URLEncoder.encode(jql, StandardCharsets.UTF_8.name()) + REST_ATTR_CHANGELOG;
         ApplicationLinkRequest request = requestFactory.createRequest(Request.MethodType.GET, jiraRestQuery);
         String jiraResponseContent = request.execute();
         Gson gson = new Gson();
@@ -218,28 +239,29 @@ public class IssueMacro implements Macro {
                     .append("\" style=\"display: none\">");
             String replacement = template;
             replacement = replacement.replaceAll("%Key%", issue.getKey());
-            replacement = replacement.replaceAll("%systemDate%", LocalDate.now().toString("yyyy-MM-dd"));
+            replacement = replacement.replaceAll("%systemDate%", LocalDate.now().toString(SYSTEM_DATE_FORMAT));
             for (Map.Entry<String, Object> entry : issueFields.entrySet()) {
                 String fieldKey = entry.getKey();
                 Object fieldValue = entry.getValue();
                 String valueFromJson = getValueFromJson(fieldValue);
                 String color = valueFromJson.toLowerCase();
 
-                if (color.equals("red") || color.equals("green") || color.equals("amber")) {
-                    if (color.equals("amber")) {
-                        color = "#FFBF00";
+                if (color.equals(COLOR_RED) || color.equals(COLOR_GREEN) || color.equals(COLOR_AMBER)) {
+                    if (color.equals(COLOR_AMBER)) {
+                        color = COLOR_AMBER_DIG;
                     }
                     replacement = replacement.replaceAll("%" + fieldKey + "color%", color);
                     replacement = changeOldColors(fieldKey, replacement, issue, date, valueFromJson);
                 }
                 replacement = replacement.replaceAll("%" + fieldKey + "%", valueFromJson);
             }
-            replacement = replacement.replaceAll("%.*color%", "#FFF0F5");
-            replacement = replacement.replaceAll("%.*colorprev%", "#FFF0F5");
-            replacement = replacement.replaceAll("%.*%", "-");
+            replacement = replacement.replaceAll("%.*color%", COLOR_DEFAULT);
+            replacement = replacement.replaceAll("%.*colorprev%", COLOR_DEFAULT);
+            replacement = replacement.replaceAll("%.*%", DEFAULT_RETURN_VALUE);
             divIssueBuilder.append(replacement)
                     .append("</div>\n");
         }
+
 
         selectFormBuilder.append("</select></p>\n<br/><div id=\"\" style=\"display: none\"></div>\n")
                 .append(divIssueBuilder)
@@ -263,7 +285,7 @@ public class IssueMacro implements Macro {
         List<History> histories = issue.getChangelog().getHistories();
         for (History history : histories) {
             String created = history.getCreated();
-            LocalDate creationDate = LocalDate.parse(created.substring(0, created.indexOf('T')));
+            LocalDate creationDate = LocalDate.parse(created.substring(0, created.indexOf(DATE_TIME_SEPARATOR)));
 
             for (HistoryItem historyItem : history.getItems()) {
                 if (historyItem.getField().equals(jiraFieldMetadataCache.getFieldNameByCustomFieldId(fieldKey))) {
@@ -275,32 +297,32 @@ public class IssueMacro implements Macro {
             }
         }
 
-        if (!flagEmpty){
-            String created = (String) issue.getFields().get("created");
-            LocalDate issueCreated = LocalDate.parse(created.substring(0, created.indexOf('T')));
+        if (!flagEmpty) {
+            String created = (String) issue.getFields().get(CREATED_FIELD_KEY);
+            LocalDate issueCreated = LocalDate.parse(created.substring(0, created.indexOf(DATE_TIME_SEPARATOR)));
             String color = valueFromJson.toLowerCase();
-            color = color.equals("amber") ? "#FFBF00" : color;
-            color = color.equals("-") ? "#FFF0F5" : color;
-            if (date.isAfter(issueCreated) || date.isEqual(issueCreated)){
+            color = color.equals(COLOR_AMBER) ? COLOR_AMBER_DIG : color;
+            color = color.equals(DEFAULT_RETURN_VALUE) ? COLOR_DEFAULT : color;
+            if (date.isAfter(issueCreated) || date.isEqual(issueCreated)) {
                 String replacement = template.replaceAll("%" + fieldKey + "prev%", valueFromJson);
                 replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
                 return replacement;
             } else {
-                String replacement = template.replaceAll("%" + fieldKey + "prev%", "-");
-                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", "#FFF0F5");
+                String replacement = template.replaceAll("%" + fieldKey + "prev%", DEFAULT_RETURN_VALUE);
+                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", COLOR_DEFAULT);
                 return replacement;
             }
         }
 
         if (item == null) {
-            return template.replaceAll("%" + fieldKey + "prev%", "-");
+            return template.replaceAll("%" + fieldKey + "prev%", DEFAULT_RETURN_VALUE);
         }
 
         String previousValue = item.getToString();
-        previousValue = previousValue == null ? "-" : previousValue;
+        previousValue = previousValue == null ? DEFAULT_RETURN_VALUE : previousValue;
         String color = previousValue.toLowerCase();
-        color = color.equals("amber") ? "#FFBF00" : color;
-        color = color.equals("-") ? "#FFF0F5" : color;
+        color = color.equals(COLOR_AMBER) ? COLOR_AMBER_DIG : color;
+        color = color.equals(DEFAULT_RETURN_VALUE) ? COLOR_DEFAULT : color;
         String replacement = template.replaceAll("%" + fieldKey + "prev%", previousValue);
         replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
 
