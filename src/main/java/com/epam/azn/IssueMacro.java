@@ -301,16 +301,15 @@ public class IssueMacro implements Macro {
             String created = (String) issue.getFields().get(CREATED_FIELD_KEY);
             LocalDate issueCreated = LocalDate.parse(created.substring(0, created.indexOf(DATE_TIME_SEPARATOR)));
             String color = valueFromJson.toLowerCase();
-            color = color.equals(COLOR_AMBER) ? COLOR_AMBER_DIG : color;
-            color = color.equals(DEFAULT_RETURN_VALUE) ? COLOR_DEFAULT : color;
+            color = getFinalColor(color);
             if (date.isAfter(issueCreated) || date.isEqual(issueCreated)) {
-                String replacement = template.replaceAll("%" + fieldKey + "prev%", valueFromJson);
-                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
-                return replacement;
+//                String replacement = template.replaceAll("%" + fieldKey + "prev%", valueFromJson);
+//                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
+                return getTemplateReplacement(valueFromJson, color, template, fieldKey);
             } else {
-                String replacement = template.replaceAll("%" + fieldKey + "prev%", DEFAULT_RETURN_VALUE);
-                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", COLOR_DEFAULT);
-                return replacement;
+//                String replacement = template.replaceAll("%" + fieldKey + "prev%", DEFAULT_RETURN_VALUE);
+//                replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", COLOR_DEFAULT);
+                return getTemplateReplacement(DEFAULT_RETURN_VALUE, COLOR_DEFAULT, template, fieldKey);
             }
         }
 
@@ -321,11 +320,20 @@ public class IssueMacro implements Macro {
         String previousValue = item.getToString();
         previousValue = previousValue == null ? DEFAULT_RETURN_VALUE : previousValue;
         String color = previousValue.toLowerCase();
-        color = color.equals(COLOR_AMBER) ? COLOR_AMBER_DIG : color;
-        color = color.equals(DEFAULT_RETURN_VALUE) ? COLOR_DEFAULT : color;
-        String replacement = template.replaceAll("%" + fieldKey + "prev%", previousValue);
-        replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
+        color = getFinalColor(color);
+//        String replacement = template.replaceAll("%" + fieldKey + "prev%", previousValue);
+//        replacement = replacement.replaceAll("%" + fieldKey + "colorprev%", color);
 
-        return replacement;
+        return getTemplateReplacement(previousValue, color, template, fieldKey);
+    }
+
+    private String getFinalColor(String color) {
+        color = color.equals(COLOR_AMBER) ? COLOR_AMBER_DIG : color;
+        return color.equals(DEFAULT_RETURN_VALUE) ? COLOR_DEFAULT : color;
+    }
+
+    private String getTemplateReplacement(String value, String color, String template, String fieldKey){
+        String replacement = template.replaceAll("%" + fieldKey + "prev%", value);
+        return replacement.replaceAll("%" + fieldKey + "colorprev%", color);
     }
 }
